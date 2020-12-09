@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group 'com.flashlife'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    maven {
+        url "http://maven.aliyun.com/nexus/content/groups/public/"
+    }
+}
+
+dependencies {
+    implementation group: 'io.netty', name: 'netty-all', version: '4.1.54.Final'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.9.1'
+    implementation group: 'com.google.guava', name: 'guava', version: '30.0-jre'
+    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.67'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.6.28'
+    testImplementation group: 'org.powermock', name: 'powermock-reflect', version: '2.0.9'
+    testImplementation group: 'org.powermock', name: 'powermock-api-mockito2', version: '2.0.9'
+    testImplementation group: 'org.powermock', name: 'powermock-module-junit4', version: '2.0.9'
+    testImplementation group: 'org.powermock', name: 'powermock-module-junit4-rule', version: '2.0.9'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
