@@ -29,12 +29,15 @@ public final class ConstantUtils {
     public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
     // default base58
     public static final BigInteger BASE58_LENGTH = BigInteger.valueOf(58);
-    private static final byte[] BASE58_BYTES = new byte[]{'1', '2', '3', '4', '5', '6', '7', '8', '9',
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T',
-            'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm',
-            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+    // default base58 characters
+    public static final String BASE58_CHARACTERS = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
-    public static byte[] getBase58Bytes() {
+    /*private static final String[] BASE58_BYTES = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9",
+            "A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "U",
+            "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "m",
+            "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
+
+    public static String[] getBase58Bytes() {
         return BASE58_BYTES;
-    }
+    }*/
 }

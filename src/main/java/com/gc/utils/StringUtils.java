@@ -26,7 +26,6 @@ public class StringUtils {
      * @return String
      */
     public static String convertByteToHexString(byte[] bytes) {
-
         if (bytes == null || bytes.length == 0) {
             return "";
         }
@@ -41,5 +40,21 @@ public class StringUtils {
             }
         }
         return hexStringBuilder.toString();
+    }
+
+    /**
+     * find matched str by simple loop
+     *
+     * @param strings     String[]
+     * @param searchedStr String
+     * @return boolean
+     */
+    public static int findStrByLoop(String[] strings, String searchedStr) {
+        for (int i = 0; i < strings.length; i++) {
+            if (strings[i].equals(searchedStr)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

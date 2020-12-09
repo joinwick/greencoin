@@ -20,13 +20,8 @@ import org.slf4j.LoggerFactory;
 public class HashService {
     private static final Logger LOGGER = LoggerFactory.getLogger(HashService.class);
 
-    public static void main(String[] args) {
-        LOGGER.debug("sha256 res: <{}>", new HashService().getHexString(
-                "上海", EnumEntity.HashAlgorithm.SHA256));
-    }
-
     /**
-     * SHA256
+     * get hex string
      *
      * @param data String
      * @return String
