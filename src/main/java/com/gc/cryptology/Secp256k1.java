@@ -30,18 +30,18 @@ public class Secp256k1 {
         BigInteger randomBigInteger = new BigInteger(1, randomBytes);
         BigInteger[] signatureRes = new BigInteger[2];
 
-        BigInteger r  = mutiplyG(randomBigInteger)[0];
-        BigInteger r_x_priv = r.multiply(new BigInteger(1, privateKey)).mod(ConstantUtils.ORDNUNG);
-        BigInteger zähler   = (new BigInteger(1, hashValue).add(r_x_priv)).mod(ConstantUtils.ORDNUNG);
-        BigInteger k_inverse = 	randomBigInteger.modInverse(ConstantUtils.ORDNUNG);
+        BigInteger r = mutiplyG(randomBigInteger)[0];
+        BigInteger r_x_priv = r.multiply(new BigInteger(1, privateKey)).mod(ConstantUtils.GC_ORDER_NUM);
+        BigInteger zähler   = (new BigInteger(1, hashValue).add(r_x_priv)).mod(ConstantUtils.GC_ORDER_NUM);
+        BigInteger k_inverse = 	randomBigInteger.modInverse(ConstantUtils.GC_ORDER_NUM);
         signatureRes[0] = r;
-        signatureRes[1] = k_inverse.multiply(zähler).mod(ConstantUtils.ORDNUNG);
+        signatureRes[1] = k_inverse.multiply(zähler).mod(ConstantUtils.GC_ORDER_NUM);
 
         return signatureRes;
     }
 
     /**
-     * https://github.com/PhenixChain/secp256k1-java/blob/master/src/main/java/Math_Modulo.java
+     *
      * @param factor
      * @return
      */
