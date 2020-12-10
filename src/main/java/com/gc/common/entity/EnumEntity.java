@@ -44,4 +44,38 @@ public class EnumEntity {
         }
     }
 
+    public enum ECCAlgorithm implements EnumInterface{
+        // secp256k1
+        SECP256K1("secp256k1", "secp256k1"),
+
+        ;
+
+        String value;
+        String label;
+
+        ECCAlgorithm(String value, String label) {
+            this.value = value;
+            this.label = label;
+        }
+
+        public static ECCAlgorithm getEnumByValue(String value){
+            for (ECCAlgorithm eccAlgorithm : ECCAlgorithm.values()){
+                if (eccAlgorithm.value.equals(value)){
+                    return eccAlgorithm;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public String getValue() {
+            return this.value;
+        }
+
+        @Override
+        public String getLabel() {
+            return this.label;
+        }
+    }
+
 }

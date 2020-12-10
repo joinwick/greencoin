@@ -32,12 +32,17 @@ public final class ConstantUtils {
     // default base58 characters
     public static final String BASE58_CHARACTERS = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
-    /*private static final String[] BASE58_BYTES = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9",
-            "A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "U",
-            "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "m",
-            "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
-
-    public static String[] getBase58Bytes() {
-        return BASE58_BYTES;
-    }*/
+    public static final BigInteger ModuloHalb  = new BigInteger("7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7FFFFE17", 16);
+    public static final BigInteger GENERATOR   = new BigInteger("79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798", 16);
+    public static final BigInteger GENERATORY  = new BigInteger("483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8", 16);
+    public static final BigInteger ORDNUNG     = new BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141", 16);
+    public static final BigInteger HALB        = new BigInteger("7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a1", 16);
+    public static final BigInteger BIG_INTEGER_ZERO  = BigInteger.ZERO;
+    public static final BigInteger BIG_INTEGER_ONE   = BigInteger.ONE;
+    public static final BigInteger BIG_INTEGER_TWO   = BigInteger.valueOf(2);
+    public static final BigInteger BIG_INTEGER_THREE = BigInteger.valueOf(3);
+    public static final BigInteger BIG_INTEGER_FOUR  = BigInteger.valueOf(4);
+    public static final BigInteger BIG_INTEGER_FIVE  = BigInteger.valueOf(5);
+    public static final BigInteger BIG_INTEGER_SIX   = BigInteger.valueOf(6);
+    public static final BigInteger BIG_INTEGER_SEVEN = BigInteger.valueOf(7);
 }
