@@ -1,0 +1,57 @@
+package com.gc.exception;
+
+/**
+ * @author join wick
+ * @version 1.0.0
+ * @className GuiCode.java
+ * @description gui(user) code definition
+ * @createDate 2020/12/10 10:30
+ * @since 1.0.0
+ */
+public enum GuiCode {
+    GUI_SUCCESS("A0000"),
+    GUI_FAILED("A0001"),
+
+    // user register exception
+    USER_REGISTER_FAILED("A0100"),
+    USER_AGREEMENT_CHECK_FAILED("A0101"),
+    USER_REGISTER_CONDITION_CHECK_FAILED("A0102"),
+
+    USER_ACCOUNT_CHECK_FAILED("A0110"),
+    USER_ACCOUNT_EXISTS("A0111"),
+    USER_ACCOUNT_CONTAINS_SENSITIVE_CHARACTER("A0112"),
+    USER_ACCOUNT_CONTAINS_SPECIAL_CHARACTER("A0113"),
+
+    USER_PASSWORD_CHECK_CHARACTER("A0120"),
+    USER_PASSWORD_LENGTH_CHECK_FAILED("A0121"),
+    USER_PASSWORD_INTENSITY_CHECK_FAILED("A0122"),
+
+    VALIDATION_CODE_CHECK_FAILED("A0130"),
+    VALIDATION_CODE_MESSAGE_CHECK_FAILED("A0131"),
+    VALIDATION_CODE_EMAIL_CHECK_FAILED("A0132"),
+    VALIDATION_CODE_VOICE_CHECK_FAILED("A0133"),
+
+    USER_IDENTIFICATION_CHECK_FAILED("A0140"),
+    USER_IDENTIFICATION_TYPE_CHECK_FAILED("A0141"),
+
+    // user login exception
+    USER_LOGIN_FAILED("A0200"),
+    USER_LOGIN_ACCOUNT_NOT_EXISTS("A0201"),
+    USER_LOGIN_ACCOUNT_FORBIDDEN("A0202"),
+    USER_LOGIN_ACCOUNT_DESTROY("A0203"),
+
+    USER_LOGIN_PASSWORD_CHECK_FAILED("A0210"),
+    USER_LOGIN_PASSWORD_ENTRY_LIMITED("A0211"),
+
+    ;
+
+    private final String code;
+
+    GuiCode(String code){
+        this.code = code;
+    }
+
+    public String getCode() {
+        return code;
+    }
+}

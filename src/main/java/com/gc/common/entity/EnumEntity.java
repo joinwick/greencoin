@@ -1,5 +1,7 @@
 package com.gc.common.entity;
 
+import com.gc.common.inter.EnumInterface;
+
 /**
  * @author join wick
  * @version 1.0.0
@@ -10,7 +12,7 @@ package com.gc.common.entity;
  */
 public class EnumEntity {
     // hash algorithm enum
-    public enum HashAlgorithm implements EnumInterface{
+    public enum HashAlgorithm implements EnumInterface {
         // sha 256
         SHA256("SHA-256", "SHA256"),
         // ripe md160

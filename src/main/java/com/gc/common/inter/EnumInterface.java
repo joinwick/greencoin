@@ -1,4 +1,4 @@
-package com.gc.common.entity;
+package com.gc.common.inter;
 
 /**
  * @author join wick
@@ -11,6 +11,7 @@ package com.gc.common.entity;
 public interface EnumInterface {
     // get enum value
     String getValue();
+
     // get enum label
     String getLabel();
 }

@@ -1,5 +1,6 @@
 package com.gc.cryptology;
 
+import com.gc.utils.CommonUtils;
 import com.gc.utils.ConstantUtils;
 import com.gc.utils.StringUtils;
 import org.slf4j.Logger;
@@ -54,7 +55,7 @@ public class Base58Service {
      */
     public String base58Decode(String data) {
         byte[] decodeByte;
-        if (StringUtils.isEmpty(data)) {
+        if (CommonUtils.isEmpty(data)) {
             LOGGER.debug("empty data");
             return "";
         }

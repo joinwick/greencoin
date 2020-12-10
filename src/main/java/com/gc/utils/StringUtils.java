@@ -9,14 +9,20 @@ package com.gc.utils;
  * @since 1.0.0
  */
 public class StringUtils {
+    private StringUtils() {
+    }
+
     /**
-     * check string empty
+     * convert string to byte[]
      *
      * @param str String
-     * @return boolean
+     * @return byte[]
      */
-    public static boolean isEmpty(String str) {
-        return str == null || str.length() == 0;
+    public static byte[] convertStringToByteArray(String str) {
+        if (CommonUtils.isEmpty(str)) {
+            return new byte[0];
+        }
+        return str.getBytes(ConstantUtils.DEFAULT_CHARSET);
     }
 
     /**
@@ -26,7 +32,7 @@ public class StringUtils {
      * @return String
      */
     public static String convertByteToHexString(byte[] bytes) {
-        if (bytes == null || bytes.length == 0) {
+        if (CommonUtils.isEmpty(bytes)) {
             return "";
         }
         StringBuilder hexStringBuilder = new StringBuilder();

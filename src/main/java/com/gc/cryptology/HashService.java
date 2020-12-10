@@ -1,6 +1,7 @@
 package com.gc.cryptology;
 
 import com.gc.common.entity.EnumEntity;
+import com.gc.utils.CommonUtils;
 import com.gc.utils.ConstantUtils;
 import com.gc.utils.StringUtils;
 import org.bouncycastle.crypto.Digest;
@@ -27,7 +28,7 @@ public class HashService {
      * @return String
      */
     public String getHexString(String data, EnumEntity.HashAlgorithm hashAlgorithm) {
-        if (StringUtils.isEmpty(data)) {
+        if (CommonUtils.isEmpty(data)) {
             LOGGER.error("empty data");
             return "";
         }

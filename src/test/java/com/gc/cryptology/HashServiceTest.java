@@ -1,6 +1,7 @@
 package com.gc.cryptology;
 
 import com.gc.common.entity.EnumEntity;
+import com.gc.utils.CommonUtils;
 import com.gc.utils.StringUtils;
 import org.junit.Test;
 
@@ -22,7 +23,7 @@ public class HashServiceTest {
     public void getHexString_EmptyData() {
         initialData = "";
         String res = hashService.getHexString(initialData, EnumEntity.HashAlgorithm.SHA256);
-        assertTrue(StringUtils.isEmpty(res));
+        assertTrue(CommonUtils.isEmpty(res));
     }
 
     @Test
