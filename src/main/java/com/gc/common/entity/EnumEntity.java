@@ -20,13 +20,15 @@ public class EnumEntity {
 
         String value;
         String label;
-        HashAlgorithm(String value, String label){
+
+        HashAlgorithm(String value, String label) {
             this.value = value;
             this.label = label;
         }
-        public static HashAlgorithm getEnumByValue(String value){
-            for (HashAlgorithm hashAlgorithm : HashAlgorithm.values()){
-                if (hashAlgorithm.value.equals(value)){
+
+        public static HashAlgorithm getEnumByValue(String value) {
+            for (HashAlgorithm hashAlgorithm : HashAlgorithm.values()) {
+                if (hashAlgorithm.value.equals(value)) {
                     return hashAlgorithm;
                 }
             }
@@ -44,10 +46,12 @@ public class EnumEntity {
         }
     }
 
-    public enum ECCAlgorithm implements EnumInterface{
+    public enum ECCAlgorithm implements EnumInterface {
         // secp256k1
         SECP256K1("secp256k1", "secp256k1"),
 
+        // ECDSA
+        ECDSA("ECDSA", "ECDSA"),
         ;
 
         String value;
@@ -58,13 +62,37 @@ public class EnumEntity {
             this.label = label;
         }
 
-        public static ECCAlgorithm getEnumByValue(String value){
-            for (ECCAlgorithm eccAlgorithm : ECCAlgorithm.values()){
-                if (eccAlgorithm.value.equals(value)){
+        public static ECCAlgorithm getEnumByValue(String value) {
+            for (ECCAlgorithm eccAlgorithm : ECCAlgorithm.values()) {
+                if (eccAlgorithm.value.equals(value)) {
                     return eccAlgorithm;
                 }
             }
             return null;
+        }
+
+        @Override
+        public String getValue() {
+            return this.value;
+        }
+
+        @Override
+        public String getLabel() {
+            return this.label;
+        }
+    }
+
+    public enum SecurityProvider implements EnumInterface {
+        // secp256k1
+        BC("BC", "BC"),
+        ;
+
+        String value;
+        String label;
+
+        SecurityProvider(String value, String label) {
+            this.value = value;
+            this.label = label;
         }
 
         @Override

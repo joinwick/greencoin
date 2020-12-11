@@ -1,5 +1,6 @@
 package com.gc.utils;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
@@ -133,6 +134,19 @@ public class CommonUtils {
      */
     public static boolean isEmpty(char[] chars) {
         return chars == null || chars.length == 0;
+    }
+
+    /**
+     * merge byte array
+     *
+     * @param bytes1 byte[]
+     * @param bytes2 byte[]
+     * @return byte[]
+     */
+    public static byte[] mergeArray(byte[] bytes1, byte[] bytes2) {
+        byte[] res = Arrays.copyOf(bytes1, bytes1.length + bytes2.length);
+        System.arraycopy(bytes2, 0, res, bytes1.length, bytes2.length);
+        return res;
     }
 
 

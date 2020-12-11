@@ -44,7 +44,7 @@ public class HashService {
      * @param hashAlgorithm EnumEntity.HashAlgorithm
      * @return byte[]
      */
-    private byte[] getHashedData(byte[] initialData, EnumEntity.HashAlgorithm hashAlgorithm) {
+    public byte[] getHashedData(byte[] initialData, EnumEntity.HashAlgorithm hashAlgorithm) {
         Digest digest;
         byte[] shaMessage;
         switch (hashAlgorithm) {

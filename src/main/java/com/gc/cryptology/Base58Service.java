@@ -2,7 +2,6 @@ package com.gc.cryptology;
 
 import com.gc.utils.CommonUtils;
 import com.gc.utils.ConstantUtils;
-import com.gc.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,11 +52,11 @@ public class Base58Service {
      * @param data String
      * @return byte[]
      */
-    public String base58Decode(String data) {
+    public byte[] base58Decode(String data) {
         byte[] decodeByte;
         if (CommonUtils.isEmpty(data)) {
             LOGGER.debug("empty data");
-            return "";
+            return new byte[0];
         }
         BigInteger bigInteger = BigInteger.ZERO;
         int dataLength = data.length();
@@ -79,7 +78,7 @@ public class Base58Service {
         }
         decodeByte = new byte[bytes.length - (zeroOneFlag ? 1 : 0) + fillZeroCount];
         System.arraycopy(bytes, zeroOneFlag ? 1 : 0, decodeByte, fillZeroCount, decodeByte.length - fillZeroCount);
-        return new String(decodeByte);
+        return decodeByte;
     }
 
 }

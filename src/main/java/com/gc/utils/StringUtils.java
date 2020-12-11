@@ -13,6 +13,21 @@ public class StringUtils {
     }
 
     /**
+     * string append
+     *
+     * @param str         String
+     * @param appendedStr String
+     * @param appendFlag  boolean
+     * @return String
+     */
+    public static String appendByCondition(String str, String appendedStr, boolean appendFlag) {
+        if (appendFlag) {
+            return appendedStr + str;
+        }
+        return str + appendedStr;
+    }
+
+    /**
      * convert string to byte[]
      *
      * @param str String
