@@ -25,6 +25,8 @@ public final class ConstantUtils {
     public static final int DEFAULT_SELECTOR_LOOP_TIME = 1000;
     // default buffer size
     public static final int DEFAULT_BYTE_BUFFER_ALLOCATION = 1024;
+    // default thread num
+    public static final int DEFAULT_THREAD_COUNT = 10;
     // default charset
     public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
     // default base58
