@@ -2,6 +2,8 @@ package com.gc.network;
 
 import com.gc.utils.ConstantUtils;
 import com.google.common.util.concurrent.*;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,13 +41,13 @@ public class CallBackServiceDemo {
         ListenableFuture<Boolean> hotWaterFuture = listeningExecutorService.submit(hotWaterJob);
         Futures.addCallback(hotWaterFuture, new FutureCallback<Boolean>() {
             @Override
-            public void onSuccess(Boolean result) {
-                if (result){
+            public void onSuccess(@Nullable Boolean result) {
+                if (Boolean.TRUE.equals(result)){
                     drinkTeaJob.hotWaterOk = true;
                 }
             }
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(@NonNull Throwable t) {
                 LOGGER.error("烧水失败,无法喝茶,原因<{}>", t.toString());
             }
         }, listeningExecutorService);
@@ -53,14 +55,14 @@ public class CallBackServiceDemo {
         ListenableFuture<Boolean> washFuture = listeningExecutorService.submit(washJob);
         Futures.addCallback(washFuture, new FutureCallback<Boolean>() {
             @Override
-            public void onSuccess(Boolean result) {
-                if (result){
+            public void onSuccess(@Nullable Boolean result) {
+                if (Boolean.TRUE.equals(result)){
                     drinkTeaJob.washOk = true;
                 }
             }
             @Override
-            public void onFailure(Throwable t) {
-                LOGGER.error("清洗失败,无法喝茶,原因<{}>", t.toString());
+            public void onFailure(@NonNull Throwable t) {
+                LOGGER.error("清洗失败,无法喝茶,原因<{}>", t.getMessage());
             }
         }, listeningExecutorService);
     }
@@ -77,6 +79,7 @@ public class CallBackServiceDemo {
                     LOGGER.debug("读书去了");
                 } catch (InterruptedException e) {
                     LOGGER.error("<{}> 失败", getCurrentThreadName());
+                    Thread.currentThread().interrupt();
                 }
                 drinkOk = drinkTea(hotWaterOk, washOk);
             }
@@ -90,7 +93,7 @@ public class CallBackServiceDemo {
             if (!hotWaterOk){
                 LOGGER.error("水未烧开");
             }
-            else {
+            if (!washOk){
                 LOGGER.debug("清洗未完成");
             }
             return false;
@@ -109,6 +112,7 @@ public class CallBackServiceDemo {
             }
             catch (InterruptedException e){
                 LOGGER.error("烧水工作异常...");
+                Thread.currentThread().interrupt();
                 return false;
             }
             LOGGER.debug("烧水工作结束...");
@@ -127,6 +131,7 @@ public class CallBackServiceDemo {
                 LOGGER.debug("清洗完了...");
             } catch (InterruptedException e) {
                 LOGGER.error("清洗工作异常...");
+                Thread.currentThread().interrupt();
                 return false;
             }
             LOGGER.debug("清洗工作结束...");
