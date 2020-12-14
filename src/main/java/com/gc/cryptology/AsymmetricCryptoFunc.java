@@ -12,8 +12,12 @@ import org.slf4j.LoggerFactory;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
+import java.security.InvalidKeyException;
+import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 
 /**
  * @author join wick
@@ -41,14 +45,21 @@ public class AsymmetricCryptoFunc implements SignatureInterface {
         }
         try {
             Cipher cipher = Cipher.getInstance(EnumEntity.EllipticSchema.ECIES.getValue(), EnumEntity.SecurityProvider.BC.getValue());
+
+            KeyFactory keyFactory = KeyFactory.getInstance("EC", "BC");
             // convert byte(public key) to BCECPublicKey
-            BCECPublicKey bcecPublicKey =
-            cipher.init(Cipher.ENCRYPT_MODE, key);
+            BCECPublicKey bcecPublicKey = (BCECPublicKey)keyFactory.generatePublic(new X509EncodedKeySpec(key));
+            cipher.init(Cipher.ENCRYPT_MODE, bcecPublicKey);
+
         } catch (NoSuchPaddingException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
             e.printStackTrace();
         }
         return new byte[0];
