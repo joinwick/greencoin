@@ -3,7 +3,6 @@ package com.gc.exception;
 /**
  * @author join wick
  * @version 1.0.0
- * @className GCException.java
  * @description gc exception definition
  * @createDate 2020/12/10 9:16
  * @since 1.0.0
@@ -13,15 +12,15 @@ public class GCException extends BaseException{
     private String exceptionCode;
     private String exceptionMsg;
 
-    GCException(){
+    public GCException(){
         super("", "");
     }
 
-    GCException(String exceptionCode, String exceptionMsg) {
+    public GCException(String exceptionCode, String exceptionMsg) {
         super(exceptionCode, exceptionMsg);
     }
 
-    GCException(ErrorCode errorCode){
+    public GCException(ErrorCode errorCode){
         super(errorCode.getErrorCode(), errorCode.getErrorMsg());
     }
 

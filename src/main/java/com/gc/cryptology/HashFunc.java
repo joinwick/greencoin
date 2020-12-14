@@ -13,13 +13,12 @@ import org.slf4j.LoggerFactory;
 /**
  * @author join wick
  * @version 1.0.0
- * @className HashService.java
  * @description hash service
  * @createDate 2020/12/8 17:56
  * @since 1.0.0
  */
-public class HashService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(HashService.class);
+public class HashFunc {
+    private static final Logger LOGGER = LoggerFactory.getLogger(HashFunc.class);
 
     /**
      * get hex string

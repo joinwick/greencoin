@@ -3,7 +3,6 @@ package com.gc.exception;
 /**
  * @author join wick
  * @version 1.0.0
- * @className GuiErrorCode.java
  * @description gui error code detail definition
  * @createDate 2020/12/10 13:26
  * @since 1.0.0

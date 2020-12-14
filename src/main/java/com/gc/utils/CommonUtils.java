@@ -7,7 +7,6 @@ import java.util.Map;
 /**
  * @author join wick
  * @version 1.0.0
- * @className CommonUtils.java
  * @description common utils
  * @createDate 2020/12/10 14:19
  * @since 1.0.0

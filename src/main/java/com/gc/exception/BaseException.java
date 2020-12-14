@@ -3,7 +3,6 @@ package com.gc.exception;
 /**
  * @author join wick
  * @version 1.0.0
- * @className BaseException.java
  * @description base exception definition
  * @createDate 2020/12/10 9:13
  * @since 1.0.0

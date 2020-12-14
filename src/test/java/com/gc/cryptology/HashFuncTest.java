@@ -2,7 +2,6 @@ package com.gc.cryptology;
 
 import com.gc.common.entity.EnumEntity;
 import com.gc.utils.CommonUtils;
-import com.gc.utils.StringUtils;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -10,13 +9,12 @@ import static org.junit.Assert.*;
 /**
  * @author join wick
  * @version 1.0.0
- * @className HashServiceTest.java
  * @description
  * @createDate 2020/12/9 15:58
  * @since 1.0.0
  */
-public class HashServiceTest {
-    private final HashService hashService = new HashService();
+public class HashFuncTest {
+    private final HashFunc hashService = new HashFunc();
     String initialData = "上海";
 
     @Test

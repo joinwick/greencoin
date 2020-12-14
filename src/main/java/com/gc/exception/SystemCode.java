@@ -3,7 +3,6 @@ package com.gc.exception;
 /**
  * @author join wick
  * @version 1.0.0
- * @className SystemCode.java
  * @description system code
  * @createDate 2020/12/10 9:31
  * @since 1.0.0
@@ -14,6 +13,8 @@ public enum SystemCode {
 
     // data not exist
     DATA_NOT_EXISTS("B0100"),
+    PRIVATE_KEY_NOT_EXISTS("B0101"),
+    PUBLIC_KEY_NOT_EXISTS("B0102"),
 
     // system resource exception
     SYSTEM_RESOURCE_EXCEPTION("B0300"),

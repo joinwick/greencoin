@@ -95,6 +95,15 @@ public class EnumEntity {
             this.label = label;
         }
 
+        public static SecurityProvider getEnumByValue(String value) {
+            for (SecurityProvider securityProvider : SecurityProvider.values()) {
+                if (securityProvider.value.equals(value)) {
+                    return securityProvider;
+                }
+            }
+            return null;
+        }
+
         @Override
         public String getValue() {
             return this.value;
@@ -105,5 +114,75 @@ public class EnumEntity {
             return this.label;
         }
     }
+
+    public enum EncryptAlgorithm implements EnumInterface{
+        // AES
+        AES("AES/CBC/PKCS5Padding", "AES/CBC/PKCS5Padding"),
+        // RSA
+        RSA("RSA/ECB/PKCS1Padding", "RSA/ECB/PKCS1Padding"),
+        ;
+
+        String value;
+        String label;
+
+        EncryptAlgorithm(String value, String label) {
+            this.value = value;
+            this.label = label;
+        }
+
+        public static EncryptAlgorithm getEnumByValue(String value) {
+            for (EncryptAlgorithm encryptAlgorithm : EncryptAlgorithm.values()) {
+                if (encryptAlgorithm.value.equals(value)) {
+                    return encryptAlgorithm;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public String getValue() {
+            return this.value;
+        }
+
+        @Override
+        public String getLabel() {
+            return this.label;
+        }
+    }
+
+    public enum EllipticSchema implements EnumInterface{
+        // ECIES
+        ECIES("ECIES", "ECIES"),
+        ;
+
+        String value;
+        String label;
+
+        EllipticSchema(String value, String label) {
+            this.value = value;
+            this.label = label;
+        }
+
+        public static EllipticSchema getEnumByValue(String value) {
+            for (EllipticSchema ellipticSchema : EllipticSchema.values()) {
+                if (ellipticSchema.value.equals(value)) {
+                    return ellipticSchema;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public String getValue() {
+            return this.value;
+        }
+
+        @Override
+        public String getLabel() {
+            return this.label;
+        }
+    }
+
+
 
 }

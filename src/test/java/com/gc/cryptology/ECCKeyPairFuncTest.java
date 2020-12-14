@@ -12,13 +12,12 @@ import static org.junit.Assert.*;
 /**
  * @author join wick
  * @version 1.0.0
- * @className ECCKeyPairServiceTest.java
  * @description
  * @createDate 2020/12/11 18:04
  * @since 1.0.0
  */
-public class ECCKeyPairServiceTest {
-    private final ECCKeyPairService eccKeyPairService = new ECCKeyPairService();
+public class ECCKeyPairFuncTest {
+    private final ECCKeyPairFunc eccKeyPairService = new ECCKeyPairFunc();
     @Test
     public void createKeyPair() throws InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchProviderException {
         ECCKeyPairRecord eccKeyPairRecord = eccKeyPairService.createKeyPair();

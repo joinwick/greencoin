@@ -3,7 +3,6 @@ package com.gc.exception;
 /**
  * @author join wick
  * @version 1.0.0
- * @className CallableCode.java
  * @description callable code definition
  * @createDate 2020/12/10 10:49
  * @since 1.0.0

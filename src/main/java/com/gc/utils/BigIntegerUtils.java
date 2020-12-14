@@ -5,7 +5,6 @@ import java.math.BigInteger;
 /**
  * @author join wick
  * @version 1.0.0
- * @className BigIntegerUtils.java
  * @description biginteger utils
  * @createDate 2020/12/10 21:09
  * @since 1.0.0

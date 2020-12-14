@@ -3,7 +3,6 @@ package com.gc.utils;
 /**
  * @author join wick
  * @version 1.0.0
- * @className StringUtils.java
  * @description string utils
  * @createDate 2020/12/8 18:44
  * @since 1.0.0

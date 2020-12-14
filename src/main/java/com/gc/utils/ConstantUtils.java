@@ -7,7 +7,6 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author join wick
  * @version 1.0.0
- * @className ConstantUtils.java
  * @description constant definition
  * @createDate 2020/12/04 23:56:00
  * @since 1.0.0
@@ -30,10 +29,17 @@ public final class ConstantUtils {
     // default charset
     public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
     // default base58
-    public static final BigInteger BASE58_LENGTH = BigInteger.valueOf(58);
+    public static final BigInteger DEFAULT_BASE58_LENGTH = BigInteger.valueOf(58);
     // default base58 characters
-    public static final String BASE58_CHARACTERS = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
-
-    public static final String GC_KEY_PREFIX = "0";
-    public static final String GC_ACCOUNT_PREFIX = "04";
+    public static final String DEFAULT_BASE58_CHARACTERS = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+    // default fix prefix
+    public static final String DEFAULT_GC_KEY_PREFIX = "0";
+    // default address fix length
+    public static final int DEFAULT_ACCOUNT_FIX_LENGTH = 4;
+    // default address fix prefix
+    public static final String DEFAULT_GC_ACCOUNT_PREFIX = "04";
+    // default private key length
+    public static final int DEFAULT_PRIVATE_KEY_LENGTH = 64;
+    // default public key length
+    public static final int DEFAULT_PUBLIC_KEY_LENGTH = 128;
 }

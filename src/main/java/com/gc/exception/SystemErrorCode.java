@@ -3,7 +3,6 @@ package com.gc.exception;
 /**
  * @author join wick
  * @version 1.0.0
- * @className SystemErrorCode.java
  * @description system error code detail definition
  * @createDate 2020/12/10 13:11
  * @since 1.0.0
@@ -14,6 +13,8 @@ public enum SystemErrorCode implements ErrorCode {
 
     // data not exist
     DATA_NOT_EXISTS(SystemCode.DATA_NOT_EXISTS, "数据不存在"),
+    PRIVATE_KEY_NOT_EXISTS(SystemCode.PRIVATE_KEY_NOT_EXISTS, "用户私钥不存在"),
+    PUBLIC_KEY_NOT_EXISTS(SystemCode.PUBLIC_KEY_NOT_EXISTS, "用户公钥不存在"),
 
     // system resource exception
     SYSTEM_RESOURCE_EXCEPTION(SystemCode.SYSTEM_RESOURCE_EXCEPTION, "系统资源异常"),

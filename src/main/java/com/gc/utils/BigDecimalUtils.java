@@ -11,7 +11,6 @@ import java.util.List;
 /**
  * @author join wick
  * @version 1.0.0
- * @className BigDecimalUtils.java
  * @description BigDecimal Util
  * @createDate 2020/12/10 16:09
  * @since 1.0.0

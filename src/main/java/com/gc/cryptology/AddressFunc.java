@@ -13,19 +13,18 @@ import java.util.Arrays;
 /**
  * @author join wick
  * @version 1.0.0
- * @className AddressService.java
  * @description address generation
  * @createDate 2020/12/11 14:34
  * @since 1.0.0
  */
-public class AddressService {
+public class AddressFunc {
 
-    private final HashService hashService;
-    private final Base58Service base58Service;
+    private final HashFunc hashService;
+    private final BaseFunc base58Service;
 
-    public AddressService() {
-        hashService = new HashService();
-        base58Service = new Base58Service();
+    public AddressFunc() {
+        hashService = new HashFunc();
+        base58Service = new BaseFunc();
     }
 
     /**
@@ -61,7 +60,7 @@ public class AddressService {
             return new byte[0];
         }
         // 1.add default prefix 0x04 for public key, convert to byte array
-        byte[] publicKeyBytes = DatatypeConverter.parseHexBinary(StringUtils.appendByCondition(publicKey, ConstantUtils.GC_ACCOUNT_PREFIX, true));
+        byte[] publicKeyBytes = DatatypeConverter.parseHexBinary(StringUtils.appendByCondition(publicKey, ConstantUtils.DEFAULT_GC_ACCOUNT_PREFIX, true));
         // 2.hash byte array using sha256
         byte[] sha256PublicKeyBytes = hashService.getHashedData(publicKeyBytes, EnumEntity.HashAlgorithm.SHA256);
         // 3.hash byte array using riped160
@@ -86,7 +85,7 @@ public class AddressService {
         // 2.hash byte array using SHA256
         byte[] riped160CheckBytes = hashService.getHashedData(sha256CheckBytes, EnumEntity.HashAlgorithm.SHA256);
         // 3.extract checked value
-        return Arrays.copyOfRange(riped160CheckBytes, 0, 4);
+        return Arrays.copyOfRange(riped160CheckBytes, 0, ConstantUtils.DEFAULT_ACCOUNT_FIX_LENGTH);
     }
 
     /**
@@ -107,8 +106,8 @@ public class AddressService {
         byte[] checkBytesFromKey = genCheckedValue(initialAddressBytes);
         // decode account address
         byte[] address = base58Service.base58Decode(accountAddress);
-        byte[] checkBytesFromAddress = new byte[4];
-        System.arraycopy(address, address.length - 4, checkBytesFromAddress, 0, 4);
+        byte[] checkBytesFromAddress = new byte[ConstantUtils.DEFAULT_ACCOUNT_FIX_LENGTH];
+        System.arraycopy(address, address.length - ConstantUtils.DEFAULT_ACCOUNT_FIX_LENGTH, checkBytesFromAddress, 0, ConstantUtils.DEFAULT_ACCOUNT_FIX_LENGTH);
         return Arrays.equals(checkBytesFromKey, checkBytesFromAddress);
     }
 
