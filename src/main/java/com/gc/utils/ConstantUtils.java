@@ -42,4 +42,6 @@ public final class ConstantUtils {
     public static final int DEFAULT_PRIVATE_KEY_LENGTH = 64;
     // default public key length
     public static final int DEFAULT_PUBLIC_KEY_LENGTH = 128;
+    // default encrypt size
+    public static final int DEFAULT_ENCRYPT_SIZE = 4096;
 }

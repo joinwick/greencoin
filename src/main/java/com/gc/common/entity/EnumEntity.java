@@ -49,9 +49,6 @@ public class EnumEntity {
     public enum ECCAlgorithm implements EnumInterface {
         // secp256k1
         SECP256K1("secp256k1", "secp256k1"),
-
-        // ECDSA
-        ECDSA("ECDSA", "ECDSA"),
         ;
 
         String value;
@@ -83,7 +80,7 @@ public class EnumEntity {
     }
 
     public enum SecurityProvider implements EnumInterface {
-        // secp256k1
+        // BC
         BC("BC", "BC"),
         ;
 
@@ -153,6 +150,10 @@ public class EnumEntity {
     public enum EllipticSchema implements EnumInterface{
         // ECIES
         ECIES("ECIES", "ECIES"),
+        // EC
+        EC("EC", "EC"),
+        // ECDSA
+        ECDSA("ECDSA", "ECDSA"),
         ;
 
         String value;
@@ -167,6 +168,76 @@ public class EnumEntity {
             for (EllipticSchema ellipticSchema : EllipticSchema.values()) {
                 if (ellipticSchema.value.equals(value)) {
                     return ellipticSchema;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public String getValue() {
+            return this.value;
+        }
+
+        @Override
+        public String getLabel() {
+            return this.label;
+        }
+    }
+
+    public enum BaseEncodingAlgorithm implements EnumInterface{
+        // base58
+        BASE58("BASE58", "BASE58"),
+        // base64
+        BASE64("BASE64", "BASE64"),
+        ;
+
+        String value;
+        String label;
+
+        BaseEncodingAlgorithm(String value, String label) {
+            this.value = value;
+            this.label = label;
+        }
+
+        public static BaseEncodingAlgorithm getEnumByValue(String value) {
+            for (BaseEncodingAlgorithm baseEncodingAlgorithm : BaseEncodingAlgorithm.values()) {
+                if (baseEncodingAlgorithm.value.equals(value)) {
+                    return baseEncodingAlgorithm;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public String getValue() {
+            return this.value;
+        }
+
+        @Override
+        public String getLabel() {
+            return this.label;
+        }
+    }
+
+    public enum SignatureAlgorithm implements EnumInterface{
+        // SHA1WithRSA
+        SHA1WithRSA("SHA1WithRSA", "SHA1WithRSA"),
+        // SHA256withECDSA
+        SHA256withECDSA("SHA256withECDSA", "SHA256withECDSA"),
+        ;
+
+        String value;
+        String label;
+
+        SignatureAlgorithm(String value, String label) {
+            this.value = value;
+            this.label = label;
+        }
+
+        public static SignatureAlgorithm getEnumByValue(String value) {
+            for (SignatureAlgorithm signatureAlgorithm : SignatureAlgorithm.values()) {
+                if (signatureAlgorithm.value.equals(value)) {
+                    return signatureAlgorithm;
                 }
             }
             return null;

@@ -2,6 +2,8 @@ package com.gc.cryptology;
 
 import com.gc.common.entity.ECCKeyPairRecord;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
@@ -17,11 +19,14 @@ import static org.junit.Assert.*;
  * @since 1.0.0
  */
 public class ECCKeyPairFuncTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ECCKeyPairFuncTest.class);
     private final ECCKeyPairFunc eccKeyPairService = new ECCKeyPairFunc();
     @Test
     public void createKeyPair() throws InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchProviderException {
         ECCKeyPairRecord eccKeyPairRecord = eccKeyPairService.createKeyPair();
-        assertEquals(64, eccKeyPairRecord.getPrivateKey().length());
-        assertEquals(128, eccKeyPairRecord.getPublicKey().length());
+        LOGGER.debug("private key =<{}>", eccKeyPairRecord.getPrivateKey());
+        LOGGER.debug("public  key =<{}>", eccKeyPairRecord.getPublicKey());
+        assertEquals(192, eccKeyPairRecord.getPrivateKey().length());
+        assertEquals(120, eccKeyPairRecord.getPublicKey().length());
     }
 }

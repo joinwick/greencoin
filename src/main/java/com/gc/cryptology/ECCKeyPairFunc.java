@@ -25,6 +25,10 @@ import java.util.Arrays;
  */
 public class ECCKeyPairFunc {
     private static final Logger LOGGER = LoggerFactory.getLogger(ECCKeyPairFunc.class);
+    private final BaseFunc baseFunc;
+    public ECCKeyPairFunc(){
+        baseFunc = new BaseFunc();
+    }
 
     /**
      * generate ecc key pair
@@ -38,7 +42,7 @@ public class ECCKeyPairFunc {
         // add bouncy castle as key pair generator
         Security.addProvider(new BouncyCastleProvider());
         // generator key pair
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(EnumEntity.ECCAlgorithm.ECDSA.getValue(), EnumEntity.SecurityProvider.BC.getValue());
+        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(EnumEntity.EllipticSchema.ECDSA.getValue(), EnumEntity.SecurityProvider.BC.getValue());
         // generate the corresponding (precomputed) elliptic curve domain parameters with a standard (or predefined) name
         ECGenParameterSpec ecGenParameterSpec = new ECGenParameterSpec(EnumEntity.ECCAlgorithm.SECP256K1.getValue());
         // initializes the key pair generator with the given parameter set and source of randomness(not need random seed).
@@ -46,7 +50,17 @@ public class ECCKeyPairFunc {
         // generate key pair
         KeyPair keyPair = keyPairGenerator.generateKeyPair();
         // convert key pair to ECCKeyPair
-        return createKeyPair(keyPair);
+        return createKeyPairWithBase64(keyPair);
+    }
+
+    public ECCKeyPairRecord createKeyPairWithBase64(KeyPair keyPair){
+        // get private key
+        BCECPrivateKey bcecPrivateKey = (BCECPrivateKey) keyPair.getPrivate();
+        // get public key
+        BCECPublicKey bcecPublicKey = (BCECPublicKey) keyPair.getPublic();
+        return new ECCKeyPairRecord(
+                baseFunc.base64Encode(bcecPrivateKey.getEncoded()),
+                baseFunc.base64Encode(bcecPublicKey.getEncoded()));
     }
 
     /**
