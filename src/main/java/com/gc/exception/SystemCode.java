@@ -32,6 +32,15 @@ public enum SystemCode {
     SYSTEM_RESOURCE_FILE_WRITE_FAILED("B0322"),
     SYSTEM_RESOURCE_FILE_CREATE_FAILED("B0323"),
 
+    // db exception
+    DB_EXCEPTION("B0330"),
+    DB_INIT_FAILED("B0331"),
+    DB_INSERT_FAILED("B0332"),
+    DB_UPDATE_FAILED("B0333"),
+    DB_DELETE_FAILED("B0334"),
+    DB_QUERY_FAILED("B0335"),
+    DB_CLOSE_FAILED("B0336"),
+
     ;
 
     private final String code;

@@ -30,7 +30,16 @@ public enum SystemErrorCode implements ErrorCode {
     SYSTEM_RESOURCE_ACCESS_FAILED(SystemCode.SYSTEM_RESOURCE_ACCESS_FAILED, "系统资源访问异常"),
     SYSTEM_RESOURCE_FILE_READ_FAILED(SystemCode.SYSTEM_RESOURCE_FILE_READ_FAILED, "系统读取磁盘文件失败"),
     SYSTEM_RESOURCE_FILE_WRITE_FAILED(SystemCode.SYSTEM_RESOURCE_FILE_WRITE_FAILED, "系统写入磁盘文件失败"),
-    SYSTEM_RESOURCE_FILE_CREATE_FAILED(SystemCode.SYSTEM_RESOURCE_FILE_CREATE_FAILED, "系统创建文件失败");
+    SYSTEM_RESOURCE_FILE_CREATE_FAILED(SystemCode.SYSTEM_RESOURCE_FILE_CREATE_FAILED, "系统创建文件失败"),
+
+    DB_EXCEPTION(SystemCode.DB_EXCEPTION, "数据库异常"),
+    DB_INIT_FAILED(SystemCode.DB_INIT_FAILED, "数据库启动异常"),
+    DB_INSERT_FAILED(SystemCode.DB_INSERT_FAILED, "数据插入异常"),
+    DB_UPDATE_FAILED(SystemCode.DB_UPDATE_FAILED, "数据更新异常"),
+    DB_DELETE_FAILED(SystemCode.DB_DELETE_FAILED, "数据删除异常"),
+    DB_QUERY_FAILED(SystemCode.DB_QUERY_FAILED, "数据查询异常"),
+    DB_CLOSE_FAILED(SystemCode.DB_CLOSE_FAILED, "数据库关闭异常");
+
 
     private final SystemCode errorCode;
     private final String errorMsg;

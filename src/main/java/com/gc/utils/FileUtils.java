@@ -41,7 +41,7 @@ public class FileUtils {
             return false;
         }
         if (!fileExist(filePath)) {
-            return new File(filePath).mkdir();
+            return new File(filePath).mkdirs();
         }
         return true;
     }

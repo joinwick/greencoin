@@ -1,6 +1,5 @@
 package com.gc.utils;
 
-import com.gc.common.entity.EnumEntity;
 import com.gc.exception.GCException;
 import com.gc.exception.SystemErrorCode;
 import org.slf4j.Logger;
@@ -17,8 +16,7 @@ import java.util.Properties;
  */
 public class PropertyUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(PropertyUtils.class);
-    private static Properties properties = ConfigLoaderUtils.loadProperties(
-            EnumEntity.ConfigPathName.GC_COMMON_CONFIG.getValue(),
+    private static final Properties properties = ConfigLoaderUtils.loadProperties(
             ConstantUtils.DEFAULT_CONFIG_FILE);
 
     private PropertyUtils() {
