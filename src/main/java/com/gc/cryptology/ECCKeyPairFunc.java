@@ -25,9 +25,9 @@ import java.util.Arrays;
  */
 public class ECCKeyPairFunc {
     private static final Logger LOGGER = LoggerFactory.getLogger(ECCKeyPairFunc.class);
-    private final BaseFunc baseFunc;
+    private final BaseCodec baseFunc;
     public ECCKeyPairFunc(){
-        baseFunc = new BaseFunc();
+        baseFunc = new BaseCodec();
     }
 
     /**

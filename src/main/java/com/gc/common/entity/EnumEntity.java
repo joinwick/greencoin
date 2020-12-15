@@ -254,6 +254,39 @@ public class EnumEntity {
         }
     }
 
+    public enum ConfigPathName implements EnumInterface{
+        // GC_COMMON_CONFIG
+        GC_COMMON_CONFIG("config.path", "常规配置文件"),
+        ;
+
+        String value;
+        String label;
+
+        ConfigPathName(String value, String label) {
+            this.value = value;
+            this.label = label;
+        }
+
+        public static ConfigPathName getEnumByValue(String value) {
+            for (ConfigPathName configPathName : ConfigPathName.values()) {
+                if (configPathName.value.equals(value)) {
+                    return configPathName;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public String getValue() {
+            return this.value;
+        }
+
+        @Override
+        public String getLabel() {
+            return this.label;
+        }
+    }
+
 
 
 }

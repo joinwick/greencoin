@@ -29,15 +29,15 @@ import java.security.spec.X509EncodedKeySpec;
  */
 public class AsymmetricCryptoFunc implements SignatureInterface {
     private static final Logger LOGGER = LoggerFactory.getLogger(AsymmetricCryptoFunc.class);
-    private final BaseFunc baseFunc;
+    private final BaseCodec baseFunc;
     public AsymmetricCryptoFunc(){
-        baseFunc = new BaseFunc();
+        baseFunc = new BaseCodec();
     }
 
     public static void main(String[] args) {
         AsymmetricCryptoFunc asymmetricCryptoFunc = new AsymmetricCryptoFunc();
         String publicKey = "MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAEzkchRA2weIWmMpaRsCejeNgq3gyCpMQMPJtCXQS1JUZTmYEnOmLpzugp9Eoh0cJDCJhhwp2d9kZJAWqysTNYAg==";
-        byte[] publicKeys = new BaseFunc().base64Decode(publicKey);
+        byte[] publicKeys = new BaseCodec().base64Decode(publicKey);
         String data = "123";
         byte[] dataBytes = StringUtils.convertStringToByteArray(data);
         byte[] bytes = asymmetricCryptoFunc.encrypt(dataBytes, dataBytes);

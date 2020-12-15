@@ -17,8 +17,8 @@ import java.math.BigInteger;
  * @createDate 2020/12/8 21:50
  * @since 1.0.0
  */
-public class BaseFunc {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseFunc.class);
+public class BaseCodec {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseCodec.class);
 
     /**
      * base58 encode
@@ -107,5 +107,7 @@ public class BaseFunc {
         }
         return Base64.decode(data);
     }
+
+
 
 }

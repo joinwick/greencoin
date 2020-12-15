@@ -15,6 +15,8 @@ public enum SystemErrorCode implements ErrorCode {
     DATA_NOT_EXISTS(SystemCode.DATA_NOT_EXISTS, "数据不存在"),
     PRIVATE_KEY_NOT_EXISTS(SystemCode.PRIVATE_KEY_NOT_EXISTS, "用户私钥不存在"),
     PUBLIC_KEY_NOT_EXISTS(SystemCode.PUBLIC_KEY_NOT_EXISTS, "用户公钥不存在"),
+    KEY_NOT_EXISTS(SystemCode.KEY_NOT_EXISTS, "key不存在"),
+    VALUE_IS_EMPTY(SystemCode.VALUE_IS_EMPTY, "value值为空"),
 
     // system resource exception
     SYSTEM_RESOURCE_EXCEPTION(SystemCode.SYSTEM_RESOURCE_EXCEPTION, "系统资源异常"),
@@ -27,7 +29,8 @@ public enum SystemErrorCode implements ErrorCode {
 
     SYSTEM_RESOURCE_ACCESS_FAILED(SystemCode.SYSTEM_RESOURCE_ACCESS_FAILED, "系统资源访问异常"),
     SYSTEM_RESOURCE_FILE_READ_FAILED(SystemCode.SYSTEM_RESOURCE_FILE_READ_FAILED, "系统读取磁盘文件失败"),
-    SYSTEM_RESOURCE_FILE_WRITE_FAILED(SystemCode.SYSTEM_RESOURCE_FILE_WRITE_FAILED, "系统写入磁盘文件失败");
+    SYSTEM_RESOURCE_FILE_WRITE_FAILED(SystemCode.SYSTEM_RESOURCE_FILE_WRITE_FAILED, "系统写入磁盘文件失败"),
+    SYSTEM_RESOURCE_FILE_CREATE_FAILED(SystemCode.SYSTEM_RESOURCE_FILE_CREATE_FAILED, "系统创建文件失败");
 
     private final SystemCode errorCode;
     private final String errorMsg;

@@ -19,11 +19,11 @@ import java.util.Arrays;
 public class AddressFunc {
 
     private final HashFunc hashFunc;
-    private final BaseFunc baseFunc;
+    private final BaseCodec baseFunc;
 
     public AddressFunc() {
         hashFunc = new HashFunc();
-        baseFunc = new BaseFunc();
+        baseFunc = new BaseCodec();
     }
 
     /**

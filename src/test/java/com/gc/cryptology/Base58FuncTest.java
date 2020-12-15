@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  * @since 1.0.0
  */
 public class Base58FuncTest {
-    private final BaseFunc base58Service = new BaseFunc();
+    private final BaseCodec base58Service = new BaseCodec();
     String initialData = "IF1801@1900.05:10:阿海:Buy:Open:@2017-12-03 15:24:59";
     String base58Data = "6ueqKDQ9byFCHYa1Pvs2PK9imt3v9iYAKFWcm6HdXjvx371M9urSZx9v2BqoiVLCzrTApTxWQQ";
     @Test

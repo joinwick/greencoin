@@ -1,5 +1,6 @@
 package com.gc.utils;
 
+import java.io.File;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -44,4 +45,8 @@ public final class ConstantUtils {
     public static final int DEFAULT_PUBLIC_KEY_LENGTH = 128;
     // default encrypt size
     public static final int DEFAULT_ENCRYPT_SIZE = 4096;
+    // default config file
+    public static final String DEFAULT_CONFIG_FILE = "/gc-config.properties";
+    // default file separator
+    public static final String DEFAULT_FILE_SEPARATOR = File.separator;
 }
