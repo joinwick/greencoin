@@ -15,6 +15,10 @@ import java.io.File;
 public class FileUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);
 
+    private FileUtils() {
+
+    }
+
     /**
      * check file exists
      *
@@ -40,9 +44,16 @@ public class FileUtils {
             LOGGER.error("file dir should not be empty");
             return false;
         }
-        if (!fileExist(filePath)) {
-            return new File(filePath).mkdirs();
+        // no need to create file
+        if (fileExist(filePath)) {
+            return true;
         }
-        return true;
+        // file not exist
+        try {
+            return new File(filePath).mkdirs();
+        } catch (Exception e) {
+            LOGGER.error("file <{}> create failed with <{}>", filePath, e.getMessage());
+            return false;
+        }
     }
 }

@@ -112,7 +112,7 @@ public class EnumEntity {
         }
     }
 
-    public enum EncryptAlgorithm implements EnumInterface{
+    public enum EncryptAlgorithm implements EnumInterface {
         // AES
         AES("AES/CBC/PKCS5Padding", "AES/CBC/PKCS5Padding"),
         // RSA
@@ -147,7 +147,7 @@ public class EnumEntity {
         }
     }
 
-    public enum EllipticSchema implements EnumInterface{
+    public enum EllipticSchema implements EnumInterface {
         // ECIES
         ECIES("ECIES", "ECIES"),
         // EC
@@ -184,7 +184,7 @@ public class EnumEntity {
         }
     }
 
-    public enum BaseEncodingAlgorithm implements EnumInterface{
+    public enum BaseEncodingAlgorithm implements EnumInterface {
         // base58
         BASE58("BASE58", "BASE58"),
         // base64
@@ -219,7 +219,7 @@ public class EnumEntity {
         }
     }
 
-    public enum SignatureAlgorithm implements EnumInterface{
+    public enum SignatureAlgorithm implements EnumInterface {
         // SHA1WithRSA
         SHA1WithRSA("SHA1WithRSA", "SHA1WithRSA"),
         // SHA256withECDSA
@@ -254,7 +254,7 @@ public class EnumEntity {
         }
     }
 
-    public enum ConfigPathName implements EnumInterface{
+    public enum ConfigPathName implements EnumInterface {
         // GC_COMMON_CONFIG
         GC_COMMON_CONFIG("config.path", "常规配置文件"),
         ;
@@ -286,7 +286,6 @@ public class EnumEntity {
             return this.label;
         }
     }
-
 
 
 }

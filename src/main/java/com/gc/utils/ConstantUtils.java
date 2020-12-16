@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
  * @since 1.0.0
  */
 public final class ConstantUtils {
-    // no need to user constructor
+    // no need to gen constructor
     private ConstantUtils(){
 
     }
@@ -49,4 +49,8 @@ public final class ConstantUtils {
     public static final String DEFAULT_CONFIG_FILE = "/gc-config.properties";
     // default file separator
     public static final String DEFAULT_FILE_SEPARATOR = File.separator;
+    // default private key
+    public static final String DEFAULT_PRIVATE_KEY = "privateKey";
+    // default public key
+    public static final String DEFAULT_PUBLIC_KEY = "publicKey";
 }

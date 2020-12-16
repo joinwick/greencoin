@@ -26,17 +26,37 @@ import java.util.Map;
  * @createDate 2020/12/10 8:49
  * @since 1.0.0
  */
-public class LevelDBOperation {
-    private static final Logger LOGGER = LoggerFactory.getLogger(LevelDBOperation.class);
+public class LevelDB {
+    private static final Logger LOGGER = LoggerFactory.getLogger(LevelDB.class);
     private DB db = null;
-    public LevelDBOperation(){
-        initDB();
+
+    /**
+     * static inner class, realize lazy loading
+     */
+    private static class LevelDBHolder {
+        // thread safety is guaranteed by JVM
+        private static final LevelDB instance = new LevelDB();
+    }
+
+    /**
+     * default private constructor
+     */
+    private LevelDB() {
+    }
+
+    /**
+     * get instance
+     *
+     * @return LevelDB
+     */
+    public static LevelDB getInstance() {
+        return LevelDBHolder.instance;
     }
 
     /**
      * init level db
      */
-    private void initDB() {
+    public synchronized void initDB() {
         DBFactory dbFactory = new Iq80DBFactory();
         Options options = new Options();
         options.createIfMissing(true);
@@ -61,7 +81,7 @@ public class LevelDBOperation {
      * @param value String
      * @return boolean
      */
-    public boolean insert(String key, String value) {
+    public synchronized boolean insert(String key, String value) {
         if (CommonUtils.isEmpty(key)) {
             LOGGER.error("key should not be empty in method<LevelDBOperation: storeData>");
             throw new GCException(SystemErrorCode.KEY_NOT_EXISTS);
@@ -85,7 +105,7 @@ public class LevelDBOperation {
      * @param key String
      * @return String
      */
-    public String query(String key) {
+    public synchronized String query(String key) {
         if (CommonUtils.isEmpty(key)) {
             LOGGER.error("key should not be empty in method<LevelDBOperation: queryData>");
             throw new GCException(SystemErrorCode.KEY_NOT_EXISTS);
@@ -104,7 +124,7 @@ public class LevelDBOperation {
      * @param key String
      * @return boolean
      */
-    public boolean delete(String key) {
+    public synchronized boolean delete(String key) {
         if (CommonUtils.isEmpty(key)) {
             LOGGER.error("key should not be empty in method<LevelDBOperation: deleteData>");
             throw new GCException(SystemErrorCode.KEY_NOT_EXISTS);
@@ -123,7 +143,7 @@ public class LevelDBOperation {
      *
      * @return List<String>
      */
-    public List<String> getAllKeys() {
+    public synchronized List<String> getAllKeys() {
         List<String> keyList = new ArrayList<>();
         try (DBIterator dbIterator = db.iterator()) {
             while (dbIterator.hasNext()) {
@@ -140,7 +160,7 @@ public class LevelDBOperation {
     /**
      * close db resource
      */
-    public void closeDB() {
+    public synchronized void closeDB() {
         if (db != null) {
             try {
                 db.close();
@@ -150,21 +170,5 @@ public class LevelDBOperation {
             }
         }
     }
-
-    public static void main(String[] args) {
-        String privateKey = "privateKey";
-        String privateKeyValue = "MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAEzkchRA2weIWmMpaRsCejeNgq3gyCpMQMPJtCXQS1JUZTmYEnOmLpzugp9Eoh0cJDCJhhwp2d9kZJAWqysTNYAg==";
-        String publicKey = "publicKey";
-        String publicKeyValue = "1HHdvEcZgbBRWdG7xMCG84Ysiuw4kbjV8n";
-        LevelDBOperation levelDBOperation = new LevelDBOperation();
-//        levelDBOperation.initDB();
-        boolean insertRes = levelDBOperation.insert(privateKey, privateKeyValue);
-        insertRes = levelDBOperation.insert(publicKey, publicKeyValue);
-        LOGGER.debug("insert res <{}>", insertRes);
-        LOGGER.debug("private key <{}>", levelDBOperation.query(privateKey));
-        LOGGER.debug("key size <{}>", levelDBOperation.getAllKeys().size());
-        levelDBOperation.closeDB();
-    }
-
 
 }
