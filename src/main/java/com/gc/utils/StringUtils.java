@@ -40,6 +40,19 @@ public class StringUtils {
     }
 
     /**
+     * convert byte[] to string
+     *
+     * @param bytes byte[]
+     * @return String
+     */
+    public static String convertByteArrayToString(byte[] bytes) {
+        if (CommonUtils.isEmpty(bytes)) {
+            return "";
+        }
+        return new String(bytes, ConstantUtils.DEFAULT_CHARSET);
+    }
+
+    /**
      * convert byte array to hex string
      *
      * @param bytes byte[]

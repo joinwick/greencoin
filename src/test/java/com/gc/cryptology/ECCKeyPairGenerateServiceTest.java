@@ -18,9 +18,9 @@ import static org.junit.Assert.*;
  * @createDate 2020/12/11 18:04
  * @since 1.0.0
  */
-public class ECCKeyPairFuncTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ECCKeyPairFuncTest.class);
-    private final ECCKeyPairFunc eccKeyPairService = new ECCKeyPairFunc();
+public class ECCKeyPairGenerateServiceTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ECCKeyPairGenerateServiceTest.class);
+    private final ECCKeyPairGenerateService eccKeyPairService = new ECCKeyPairGenerateService();
     @Test
     public void createKeyPair() throws InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchProviderException {
         ECCKeyPairRecord eccKeyPairRecord = eccKeyPairService.createKeyPair();

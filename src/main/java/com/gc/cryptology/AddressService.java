@@ -16,12 +16,12 @@ import java.util.Arrays;
  * @createDate 2020/12/11 14:34
  * @since 1.0.0
  */
-public class AddressFunc {
+public class AddressService {
 
     private final HashFunc hashFunc;
     private final BaseCodec baseFunc;
 
-    public AddressFunc() {
+    public AddressService() {
         hashFunc = new HashFunc();
         baseFunc = new BaseCodec();
     }

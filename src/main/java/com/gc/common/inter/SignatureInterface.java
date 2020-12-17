@@ -9,8 +9,8 @@ package com.gc.common.inter;
  */
 public interface SignatureInterface extends BaseCryptologyInterface {
     // signature by private key
-    byte[] signature(byte[] data, byte[] key);
+    byte[] signature(byte[] data, byte[] privateKey);
 
     // validate signature by public key
-    boolean validation(byte[] data, byte[] key);
+    boolean validation(byte[] data, byte[] sig, byte[] publicKey);
 }

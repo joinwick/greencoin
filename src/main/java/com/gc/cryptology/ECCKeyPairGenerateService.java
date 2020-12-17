@@ -2,6 +2,7 @@ package com.gc.cryptology;
 
 import com.gc.common.entity.ECCKeyPairRecord;
 import com.gc.common.entity.EnumEntity;
+import com.gc.database.LevelDB;
 import com.gc.utils.CommonUtils;
 import com.gc.utils.ConstantUtils;
 import com.gc.utils.StringUtils;
@@ -23,10 +24,12 @@ import java.util.Arrays;
  * @createDate 2020/12/11 13:52
  * @since 1.0.0
  */
-public class ECCKeyPairFunc {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ECCKeyPairFunc.class);
+public class ECCKeyPairGenerateService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ECCKeyPairGenerateService.class);
+    // base encoding & decoding
     private final BaseCodec baseFunc;
-    public ECCKeyPairFunc(){
+
+    public ECCKeyPairGenerateService() {
         baseFunc = new BaseCodec();
     }
 
@@ -53,14 +56,47 @@ public class ECCKeyPairFunc {
         return createKeyPairWithBase64(keyPair);
     }
 
-    public ECCKeyPairRecord createKeyPairWithBase64(KeyPair keyPair){
+    /**
+     * create & store keys
+     *
+     * @param keyPair KeyPair
+     * @return ECCKeyPairRecord
+     */
+    private ECCKeyPairRecord createKeyPairWithBase64(KeyPair keyPair) {
         // get private key
         BCECPrivateKey bcecPrivateKey = (BCECPrivateKey) keyPair.getPrivate();
         // get public key
         BCECPublicKey bcecPublicKey = (BCECPublicKey) keyPair.getPublic();
-        return new ECCKeyPairRecord(
-                baseFunc.base64Encode(bcecPrivateKey.getEncoded()),
-                baseFunc.base64Encode(bcecPublicKey.getEncoded()));
+        // get private key(String)
+        String privateKey = baseFunc.base64Encode(bcecPrivateKey.getEncoded());
+        // get public key(String)
+        String publicKey = baseFunc.base64Encode(bcecPublicKey.getEncoded());
+        if (!saveKeyIntoDB(privateKey, publicKey)) {
+            LOGGER.error("keys store into db error");
+            return null;
+        }
+        return new ECCKeyPairRecord(privateKey, publicKey);
+    }
+
+    /**
+     * store keys into db
+     *
+     * @param privateKey String
+     * @param publicKey  String
+     * @return boolean
+     */
+    private boolean saveKeyIntoDB(String privateKey, String publicKey) {
+        if (CommonUtils.isEmpty(privateKey) || CommonUtils.isEmpty(publicKey)) {
+            LOGGER.error("key is empty");
+            return false;
+        }
+        // get leveldb instance
+        LevelDB levelDB = LevelDB.getInstance();
+        levelDB.initDB();
+        boolean privateKeyInsertRes = levelDB.insert(ConstantUtils.DEFAULT_PRIVATE_KEY, privateKey);
+        boolean publicKeyInsertRes = levelDB.insert(ConstantUtils.DEFAULT_PUBLIC_KEY, publicKey);
+        levelDB.closeDB();
+        return privateKeyInsertRes && publicKeyInsertRes;
     }
 
     /**

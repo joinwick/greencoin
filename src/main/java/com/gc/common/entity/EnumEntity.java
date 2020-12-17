@@ -5,7 +5,6 @@ import com.gc.common.inter.EnumInterface;
 /**
  * @author join wick
  * @version 1.0.0
- * @className EnumEntity.java
  * @description enum entity
  * @createDate 2020/12/8 18:00
  * @since 1.0.0
@@ -271,6 +270,41 @@ public class EnumEntity {
             for (ConfigPathName configPathName : ConfigPathName.values()) {
                 if (configPathName.value.equals(value)) {
                     return configPathName;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public String getValue() {
+            return this.value;
+        }
+
+        @Override
+        public String getLabel() {
+            return this.label;
+        }
+    }
+
+    public enum KeyType implements EnumInterface {
+        // private key
+        PRIVATE_KEY("PrivateKey", "PrivateKey"),
+        // public key
+        PUBLIC_KEY("PublicKey", "PublicKey"),
+        ;
+
+        String value;
+        String label;
+
+        KeyType(String value, String label) {
+            this.value = value;
+            this.label = label;
+        }
+
+        public static KeyType getEnumByValue(String value) {
+            for (KeyType keyType : KeyType.values()) {
+                if (keyType.value.equals(value)) {
+                    return keyType;
                 }
             }
             return null;
