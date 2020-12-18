@@ -35,6 +35,7 @@ public class ECCKeyPairGenerateService {
 
     /**
      * generate ecc key pair
+     * return null when create keys failed or store keys into db failed
      *
      * @return ECCKeyPairRecord
      * @throws NoSuchProviderException            NoSuchProviderException
@@ -90,12 +91,16 @@ public class ECCKeyPairGenerateService {
             LOGGER.error("key is empty");
             return false;
         }
+        boolean privateKeyInsertRes;
+        boolean publicKeyInsertRes;
         // get leveldb instance
         LevelDB levelDB = LevelDB.getInstance();
-        levelDB.initDB();
-        boolean privateKeyInsertRes = levelDB.insert(ConstantUtils.DEFAULT_PRIVATE_KEY, privateKey);
-        boolean publicKeyInsertRes = levelDB.insert(ConstantUtils.DEFAULT_PUBLIC_KEY, publicKey);
-        levelDB.closeDB();
+        synchronized (LevelDB.class) {
+            levelDB.initDB();
+            privateKeyInsertRes = levelDB.insert(ConstantUtils.DEFAULT_PRIVATE_KEY, privateKey);
+            publicKeyInsertRes = levelDB.insert(ConstantUtils.DEFAULT_PUBLIC_KEY, publicKey);
+            levelDB.closeDB();
+        }
         return privateKeyInsertRes && publicKeyInsertRes;
     }
 

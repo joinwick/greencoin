@@ -15,6 +15,7 @@ public enum SystemErrorCode implements ErrorCode {
     DATA_NOT_EXISTS(SystemCode.DATA_NOT_EXISTS, "数据不存在"),
     PRIVATE_KEY_NOT_EXISTS(SystemCode.PRIVATE_KEY_NOT_EXISTS, "用户私钥不存在"),
     PUBLIC_KEY_NOT_EXISTS(SystemCode.PUBLIC_KEY_NOT_EXISTS, "用户公钥不存在"),
+    SYMMETRIC_KEY_NOT_EXISTS(SystemCode.SYMMETRIC_KEY_NOT_EXISTS, "用户对称密钥不存在"),
     KEY_NOT_EXISTS(SystemCode.KEY_NOT_EXISTS, "key不存在"),
     VALUE_IS_EMPTY(SystemCode.VALUE_IS_EMPTY, "value值为空"),
 

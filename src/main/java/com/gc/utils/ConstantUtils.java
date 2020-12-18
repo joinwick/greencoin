@@ -53,4 +53,6 @@ public final class ConstantUtils {
     public static final String DEFAULT_PRIVATE_KEY = "privateKey";
     // default public key
     public static final String DEFAULT_PUBLIC_KEY = "publicKey";
+    // default symmetric key
+    public static final String DEFAULT_SYMMETRIC_KEY = "SymmetricKey";
 }

@@ -111,41 +111,6 @@ public class EnumEntity {
         }
     }
 
-    public enum EncryptAlgorithm implements EnumInterface {
-        // AES
-        AES("AES/CBC/PKCS5Padding", "AES/CBC/PKCS5Padding"),
-        // RSA
-        RSA("RSA/ECB/PKCS1Padding", "RSA/ECB/PKCS1Padding"),
-        ;
-
-        String value;
-        String label;
-
-        EncryptAlgorithm(String value, String label) {
-            this.value = value;
-            this.label = label;
-        }
-
-        public static EncryptAlgorithm getEnumByValue(String value) {
-            for (EncryptAlgorithm encryptAlgorithm : EncryptAlgorithm.values()) {
-                if (encryptAlgorithm.value.equals(value)) {
-                    return encryptAlgorithm;
-                }
-            }
-            return null;
-        }
-
-        @Override
-        public String getValue() {
-            return this.value;
-        }
-
-        @Override
-        public String getLabel() {
-            return this.label;
-        }
-    }
-
     public enum EllipticSchema implements EnumInterface {
         // ECIES
         ECIES("ECIES", "ECIES"),
@@ -286,11 +251,50 @@ public class EnumEntity {
         }
     }
 
+    public enum SymmetricAlgorithm implements EnumInterface {
+        // des
+        DES("DES", "DES"),
+        // 3des
+        DESEDE("DESede", "DESede"),
+        // aes
+        AES("AES", "AES"),
+        ;
+
+        String value;
+        String label;
+
+        SymmetricAlgorithm(String value, String label) {
+            this.value = value;
+            this.label = label;
+        }
+
+        public static SymmetricAlgorithm getEnumByValue(String value) {
+            for (SymmetricAlgorithm symmetricAlgorithm : SymmetricAlgorithm.values()) {
+                if (symmetricAlgorithm.value.equals(value)) {
+                    return symmetricAlgorithm;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public String getValue() {
+            return this.value;
+        }
+
+        @Override
+        public String getLabel() {
+            return this.label;
+        }
+    }
+
     public enum KeyType implements EnumInterface {
         // private key
         PRIVATE_KEY("PrivateKey", "PrivateKey"),
         // public key
         PUBLIC_KEY("PublicKey", "PublicKey"),
+        // symmetric key
+        SYMMETRIC_KEY("SymmetricKey", "SymmetricKey"),
         ;
 
         String value;
@@ -305,6 +309,49 @@ public class EnumEntity {
             for (KeyType keyType : KeyType.values()) {
                 if (keyType.value.equals(value)) {
                     return keyType;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public String getValue() {
+            return this.value;
+        }
+
+        @Override
+        public String getLabel() {
+            return this.label;
+        }
+    }
+
+    public enum KeyLengthType implements EnumInterface {
+        // key length 56
+        KEY_56("56", "56"),
+        // key length 112
+        KEY_112("112", "112"),
+        // key length 128
+        KEY_128("128", "128"),
+        // key length 168
+        KEY_168("168", "168"),
+        // key length 128
+        KEY_192("192", "192"),
+        // key length 128
+        KEY_256("256", "256"),
+        ;
+
+        String value;
+        String label;
+
+        KeyLengthType(String value, String label) {
+            this.value = value;
+            this.label = label;
+        }
+
+        public static KeyLengthType getEnumByValue(String value) {
+            for (KeyLengthType keyLengthType : KeyLengthType.values()) {
+                if (keyLengthType.value.equals(value)) {
+                    return keyLengthType;
                 }
             }
             return null;

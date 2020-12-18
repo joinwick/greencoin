@@ -28,11 +28,11 @@ import java.security.spec.X509EncodedKeySpec;
  * @createDate 2020/12/14 16:08
  * @since 1.0.0
  */
-public class AsymmetricCryptoFunc implements SignatureInterface {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AsymmetricCryptoFunc.class);
+public class AsymmetricCrypto implements SignatureInterface {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AsymmetricCrypto.class);
 
     public static void main(String[] args) {
-        AsymmetricCryptoFunc asymmetricCryptoFunc = new AsymmetricCryptoFunc();
+        AsymmetricCrypto asymmetricCryptoFunc = new AsymmetricCrypto();
         BaseCodec baseCodec = new BaseCodec();
         String privateKey = "MIGNAgEAMBAGByqGSM49AgEGBSuBBAAKBHYwdAIBAQQgagwhvyMM4c0a0wMaEO1IY0GKAxUwOiKzvYs2gqtQAqugBwYFK4EEAAqhRANCAAQs618JBzf+V816uhpcNLDSJi9XzEZ9qkSotMD+5UCTeiQn02pZb7vSSssWBPgWiYczNniCmzdrGjkZ5ftAQtzO";
         String publicKey = "MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAELOtfCQc3/lfNeroaXDSw0iYvV8xGfapEqLTA/uVAk3okJ9NqWW+70krLFgT4FomHMzZ4gps3axo5GeX7QELczg==";
