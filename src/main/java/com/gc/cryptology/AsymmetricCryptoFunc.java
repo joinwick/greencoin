@@ -84,7 +84,7 @@ public class AsymmetricCryptoFunc implements SignatureInterface {
         try {
             // convert byte(public publicKey) to BCECPublicKey
             BCECPublicKey bcecPublicKey = (BCECPublicKey) getKey(publicKey, EnumEntity.KeyType.PUBLIC_KEY);
-            // get cipher
+            // get cipher by getInstance
             Cipher cipher = Cipher.getInstance(
                     EnumEntity.EllipticSchema.ECIES.getValue(),
                     EnumEntity.SecurityProvider.BC.getValue());
@@ -117,7 +117,7 @@ public class AsymmetricCryptoFunc implements SignatureInterface {
         try {
             // convert byte(private privateKey) to BCECPrivateKey
             BCECPrivateKey bcecPrivateKey = (BCECPrivateKey) getKey(privateKey, EnumEntity.KeyType.PRIVATE_KEY);
-            // get cipher
+            // get cipher by getInstance
             Cipher cipher = Cipher.getInstance(
                     EnumEntity.EllipticSchema.ECIES.getValue(),
                     EnumEntity.SecurityProvider.BC.getValue());

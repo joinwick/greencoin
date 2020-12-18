@@ -18,8 +18,8 @@ import static org.junit.Assert.*;
  * @since 1.0.0
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class LevelDBOperationTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(LevelDBOperationTest.class);
+public class LevelDBTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(LevelDBTest.class);
     private final LevelDB levelDB = LevelDB.getInstance();
     String key = "上海";
     String value = "你好!";

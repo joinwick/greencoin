@@ -67,9 +67,9 @@ public class ECCKeyPairGenerateService {
         BCECPrivateKey bcecPrivateKey = (BCECPrivateKey) keyPair.getPrivate();
         // get public key
         BCECPublicKey bcecPublicKey = (BCECPublicKey) keyPair.getPublic();
-        // get private key(String)
+        // get private key(String), get DER with format(PKCS #8) by privateKey.getEncoded()
         String privateKey = baseFunc.base64Encode(bcecPrivateKey.getEncoded());
-        // get public key(String)
+        // get public key(String), get DER with format(X.509) by publicKey.getEncoded()
         String publicKey = baseFunc.base64Encode(bcecPublicKey.getEncoded());
         if (!saveKeyIntoDB(privateKey, publicKey)) {
             LOGGER.error("keys store into db error");

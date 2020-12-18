@@ -3,6 +3,8 @@ package com.gc.cryptology;
 import com.gc.common.entity.EnumEntity;
 import com.gc.utils.CommonUtils;
 import com.gc.utils.ConstantUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.ByteArrayOutputStream;
@@ -17,7 +19,7 @@ import java.util.Arrays;
  * @since 1.0.0
  */
 public class AddressService {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(AddressService.class);
     private final HashFunc hashFunc;
     private final BaseCodec baseFunc;
 
@@ -37,6 +39,7 @@ public class AddressService {
         // 1.gen initial address
         byte[] initialAddressBytes = genInitialAddress(publicKey);
         if (CommonUtils.isEmpty(initialAddressBytes)) {
+            LOGGER.error("public key is empty");
             return null;
         }
         // 2.calculate check sum
@@ -56,19 +59,18 @@ public class AddressService {
      */
     private byte[] genInitialAddress(String publicKey) throws IOException {
         if (CommonUtils.isEmpty(publicKey)) {
+            LOGGER.error("public key is empty");
             return new byte[0];
         }
-        // convert default key prefix
+        // convert default key prefix(0x04)
         byte[] prefixBytes = DatatypeConverter.parseHexBinary(ConstantUtils.DEFAULT_GC_ACCOUNT_PREFIX);
         byte[] initialPublicKeyBytes = baseFunc.base64Decode(publicKey);
-        // 1.add default prefix 0x04 for public key, convert to byte array
-//        byte[] publicKeyBytes = DatatypeConverter.parseHexBinary(StringUtils.appendByCondition(publicKey, ConstantUtils.DEFAULT_GC_ACCOUNT_PREFIX, true));
+        // 1.get public keys
         byte[] publicKeyBytes = CommonUtils.mergeArray(prefixBytes, initialPublicKeyBytes);
         // 2.hash byte array using sha256
         byte[] sha256PublicKeyBytes = hashFunc.getHashedData(publicKeyBytes, EnumEntity.HashAlgorithm.SHA256);
         // 3.hash byte array using riped160
         byte[] riped160PublicKeyBytes = hashFunc.getHashedData(sha256PublicKeyBytes, EnumEntity.HashAlgorithm.RIPEMD160);
-
         // 4.add default prefix 0x00 for riped160PublicKeyBytes as main network identifier
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         byteArrayOutputStream.write((byte) 0);
@@ -83,6 +85,10 @@ public class AddressService {
      * @return byte[]
      */
     private byte[] genCheckedValue(byte[] initialAddressBytes) {
+        if (CommonUtils.isEmpty(initialAddressBytes)){
+            LOGGER.error("address is empty");
+            return new byte[0];
+        }
         // 1.hash byte array using sha256
         byte[] sha256CheckBytes = hashFunc.getHashedData(initialAddressBytes, EnumEntity.HashAlgorithm.SHA256);
         // 2.hash byte array using SHA256
@@ -101,6 +107,7 @@ public class AddressService {
      */
     public boolean addressValidation(String publicKey, String accountAddress) throws IOException {
         if (CommonUtils.isEmpty(publicKey) || CommonUtils.isEmpty(accountAddress)) {
+            LOGGER.error("public key or address is empty");
             return false;
         }
         // get initial address by public key
