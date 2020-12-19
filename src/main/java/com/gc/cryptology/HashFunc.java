@@ -33,7 +33,7 @@ public class HashFunc {
         }
         byte[] initialData = data.getBytes(ConstantUtils.DEFAULT_CHARSET);
         byte[] hashData = getHashedData(initialData, hashAlgorithm);
-        return StringUtils.convertByteToHexString(hashData);
+        return StringUtils.convertByteArrayToString(hashData);
     }
 
     /**

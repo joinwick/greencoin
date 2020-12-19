@@ -5,17 +5,14 @@ import com.gc.common.inter.BaseCryptologyInterface;
 import com.gc.exception.GCException;
 import com.gc.exception.SystemErrorCode;
 import com.gc.utils.CommonUtils;
+import com.gc.utils.StringUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
+import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.*;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
 
 /**
  * @author join wick
@@ -27,17 +24,18 @@ import java.security.spec.X509EncodedKeySpec;
 public class SymmetricCrypto implements BaseCryptologyInterface {
     private static final Logger LOGGER = LoggerFactory.getLogger(SymmetricCrypto.class);
 
-    private final BaseCodec baseCodec;
-
-    public SymmetricCrypto() {
-        baseCodec = new BaseCodec();
-    }
-
     // init security provider
     static {
         Security.addProvider(new BouncyCastleProvider());
     }
 
+    /**
+     * use symmetric key to encrypting data
+     *
+     * @param data byte[]
+     * @param key  byte[]
+     * @return byte[]
+     */
     @Override
     public byte[] encrypt(byte[] data, byte[] key) {
         if (CommonUtils.isEmpty(data)) {
@@ -47,18 +45,104 @@ public class SymmetricCrypto implements BaseCryptologyInterface {
             throw new GCException(SystemErrorCode.SYMMETRIC_KEY_NOT_EXISTS);
         }
         byte[] encryptData = new byte[0];
-        // get SecretKey
-        SecretKey secretKey = getKey(key, EnumEntity.SymmetricAlgorithm.AES);
-        // get cipher
-//        Cipher cipher = Cipher.getInstance();
-
-
+        try {
+            // get SecretKey
+            SecretKey secretKey = getKey(key, EnumEntity.SymmetricAlgorithm.AES);
+            // get cipher
+            Cipher cipher = Cipher.getInstance(EnumEntity.SymmetricAlgorithm.AES.getValue());
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            encryptData = cipher.doFinal(data);
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException | BadPaddingException | IllegalBlockSizeException | InvalidKeyException e) {
+            LOGGER.error("encrypt data failed with reason <{}>", e.getMessage());
+        }
         return encryptData;
     }
 
+    /**
+     * use symmetric key to decrypting data
+     *
+     * @param data byte[]
+     * @param key  byte[]
+     * @return byte[]
+     */
     @Override
     public byte[] decrypt(byte[] data, byte[] key) {
-        return new byte[0];
+        if (CommonUtils.isEmpty(data)) {
+            throw new GCException(SystemErrorCode.DATA_NOT_EXISTS);
+        }
+        if (CommonUtils.isEmpty(key)) {
+            throw new GCException(SystemErrorCode.SYMMETRIC_KEY_NOT_EXISTS);
+        }
+        byte[] decryptData = new byte[0];
+        try {
+            // get SecretKey
+            SecretKey secretKey = getKey(key, EnumEntity.SymmetricAlgorithm.AES);
+            // get cipher
+            Cipher cipher = Cipher.getInstance(EnumEntity.SymmetricAlgorithm.AES.getValue());
+            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            decryptData = cipher.doFinal(data);
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException e) {
+            e.printStackTrace();
+        }
+        return decryptData;
+    }
+
+    /**
+     * use symmetric key to encrypting data
+     *
+     * @param data               byte[]
+     * @param key                byte[]
+     * @param symmetricAlgorithm EnumEntity.SymmetricAlgorithm
+     * @return byte[]
+     */
+    public byte[] encrypt(byte[] data, byte[] key, EnumEntity.SymmetricAlgorithm symmetricAlgorithm) {
+        if (CommonUtils.isEmpty(data)) {
+            throw new GCException(SystemErrorCode.DATA_NOT_EXISTS);
+        }
+        if (CommonUtils.isEmpty(key)) {
+            throw new GCException(SystemErrorCode.SYMMETRIC_KEY_NOT_EXISTS);
+        }
+        byte[] encryptData = new byte[0];
+        try {
+            // get SecretKey
+            SecretKey secretKey = getKey(key, symmetricAlgorithm);
+            // get cipher
+            Cipher cipher = Cipher.getInstance(symmetricAlgorithm.getValue());
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            encryptData = cipher.doFinal(data);
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException | BadPaddingException | IllegalBlockSizeException | InvalidKeyException e) {
+            LOGGER.error("encrypt data failed with reason <{}>", e.getMessage());
+        }
+        return encryptData;
+    }
+
+    /**
+     * use symmetric key to decrypting data
+     *
+     * @param data               byte[]
+     * @param key                byte[]
+     * @param symmetricAlgorithm EnumEntity.SymmetricAlgorithm
+     * @return byte[]
+     */
+    public byte[] decrypt(byte[] data, byte[] key, EnumEntity.SymmetricAlgorithm symmetricAlgorithm) {
+        if (CommonUtils.isEmpty(data)) {
+            throw new GCException(SystemErrorCode.DATA_NOT_EXISTS);
+        }
+        if (CommonUtils.isEmpty(key)) {
+            throw new GCException(SystemErrorCode.SYMMETRIC_KEY_NOT_EXISTS);
+        }
+        byte[] decryptData = new byte[0];
+        try {
+            // get SecretKey
+            SecretKey secretKey = getKey(key, symmetricAlgorithm);
+            // get cipher
+            Cipher cipher = Cipher.getInstance(symmetricAlgorithm.getValue());
+            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            decryptData = cipher.doFinal(data);
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException e) {
+            e.printStackTrace();
+        }
+        return decryptData;
     }
 
     /**

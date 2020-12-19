@@ -31,35 +31,6 @@ import java.security.spec.X509EncodedKeySpec;
 public class AsymmetricCrypto implements SignatureInterface {
     private static final Logger LOGGER = LoggerFactory.getLogger(AsymmetricCrypto.class);
 
-    public static void main(String[] args) {
-        AsymmetricCrypto asymmetricCryptoFunc = new AsymmetricCrypto();
-        BaseCodec baseCodec = new BaseCodec();
-        String privateKey = "MIGNAgEAMBAGByqGSM49AgEGBSuBBAAKBHYwdAIBAQQgagwhvyMM4c0a0wMaEO1IY0GKAxUwOiKzvYs2gqtQAqugBwYFK4EEAAqhRANCAAQs618JBzf+V816uhpcNLDSJi9XzEZ9qkSotMD+5UCTeiQn02pZb7vSSssWBPgWiYczNniCmzdrGjkZ5ftAQtzO";
-        String publicKey = "MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAELOtfCQc3/lfNeroaXDSw0iYvV8xGfapEqLTA/uVAk3okJ9NqWW+70krLFgT4FomHMzZ4gps3axo5GeX7QELczg==";
-        // get decode keys
-        byte[] privateKeys = baseCodec.base64Decode(privateKey);
-        byte[] publicKeys = baseCodec.base64Decode(publicKey);
-
-        String data = "123456上海你好";
-        byte[] dataBytes = StringUtils.convertStringToByteArray(data);
-
-        byte[] encryptBytes = asymmetricCryptoFunc.encrypt(dataBytes, publicKeys);
-        String encryptData = StringUtils.convertByteToHexString(encryptBytes);
-        LOGGER.debug("encrypt msg   = <{}>", encryptData);
-
-        byte[] decryptBytes = asymmetricCryptoFunc.decrypt(encryptBytes, privateKeys);
-        String decryptData = StringUtils.convertByteArrayToString(decryptBytes);
-        LOGGER.debug("decrypt msg   = <{}>", decryptData);
-
-        byte[] signature = asymmetricCryptoFunc.signature(dataBytes, privateKeys);
-        String signatureData = StringUtils.convertByteToHexString(signature);
-        LOGGER.debug("signature msg = <{}>", signatureData);
-
-        boolean verifyRes = asymmetricCryptoFunc.validation(dataBytes, signature, publicKeys);
-        LOGGER.debug("verify msg    = <{}>", verifyRes);
-
-    }
-
     // init security provider
     static {
         Security.addProvider(new BouncyCastleProvider());
