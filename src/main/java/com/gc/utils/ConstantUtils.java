@@ -55,4 +55,8 @@ public final class ConstantUtils {
     public static final String DEFAULT_PUBLIC_KEY = "publicKey";
     // default symmetric key
     public static final String DEFAULT_SYMMETRIC_KEY = "SymmetricKey";
+    // default date time format
+    public static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    // default time zone(GMT-0)
+    public static final String DEFAULT_TIME_ZONE = "GMT-0";
 }

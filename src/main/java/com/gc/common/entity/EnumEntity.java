@@ -258,6 +258,14 @@ public class EnumEntity {
         DESEDE("DESede", "DESede"),
         // aes
         AES("AES", "AES"),
+        // PBEWITHMD5andDES
+        PBEWITHMD5andDES("PBEWITHMD5andDES", "PBEWITHMD5andDES"),
+        // PBEWITHMD5andTripleDES
+        PBEWITHMD5andTripleDES("PBEWITHMD5andTripleDES", "PBEWITHMD5andTripleDES"),
+        // PBEWITHSHA1AndDESede
+        PBEWITHSHA1AndDESede("PBEWITHSHA1AndDESede", "PBEWITHSHA1AndDESede"),
+        // PBEWITHSHA1AndRC2_40
+        PBEWITHSHA1AndRC2_40("PBEWITHSHA1AndRC2_40", "PBEWITHSHA1AndRC2_40"),
         ;
 
         String value;

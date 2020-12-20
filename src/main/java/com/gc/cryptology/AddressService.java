@@ -40,7 +40,7 @@ public class AddressService {
         byte[] initialAddressBytes = genInitialAddress(publicKey);
         if (CommonUtils.isEmpty(initialAddressBytes)) {
             LOGGER.error("public key is empty");
-            return null;
+            return "";
         }
         // 2.calculate check sum
         byte[] checkBytes = genCheckedValue(initialAddressBytes);
