@@ -14,9 +14,10 @@ import java.nio.charset.StandardCharsets;
  */
 public final class ConstantUtils {
     // no need to gen constructor
-    private ConstantUtils(){
+    private ConstantUtils() {
 
     }
+
     // default server ip
     public static final String DEFAULT_SERVER_IP = "127.0.0.1";
     // default server port
@@ -57,6 +58,5 @@ public final class ConstantUtils {
     public static final String DEFAULT_SYMMETRIC_KEY = "SymmetricKey";
     // default date time format
     public static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    // default time zone(GMT-0)
-    public static final String DEFAULT_TIME_ZONE = "GMT-0";
+
 }

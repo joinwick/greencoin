@@ -15,8 +15,8 @@ public class BlockHeader {
     private String preBlockHashValue;
     // hash value of merkle root, SHA256(SHA256(merkle root))
     private String merkleRootHashValue;
-    // unix time stamp, must larger than the previous 11 blocks middle time, these blocks(time >= 2h) will be refused by other node
-    private int timeStamp;
+    // unix time stamp with , must larger than the previous 11 blocks middle time, these blocks(time >= 2h) will be refused by other node
+    private long timeStamp;
     //
     private int targetZeroCount;
     // used to generate a specific target value

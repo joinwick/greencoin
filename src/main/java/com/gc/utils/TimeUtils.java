@@ -3,14 +3,11 @@ package com.gc.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author join wick
@@ -27,17 +24,44 @@ public class TimeUtils {
 
     /**
      * convert unix time stamp(needs to be accurate to milliseconds) to GMT date time
+     * use DateTimeFormatter(thread safety) to replace SimpleDateFormat(not thread safety)
      *
      * @param timeStamp long(milliseconds)
      * @return String
      */
-    public static String convertTimeStampToDateTime(long timeStamp) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(ConstantUtils.DEFAULT_DATE_TIME_FORMAT);
-        simpleDateFormat.setTimeZone(TimeZone.getTimeZone(ConstantUtils.DEFAULT_TIME_ZONE));
-        return simpleDateFormat.format(new Date(Long.parseLong(String.valueOf(timeStamp))));
+    public static String convertTimeStampToUnixDateTime(long timeStamp) {
+        if (timeStamp < 0) {
+            LOGGER.error("unsupported negative time stamp in method<TimeUtils: convertTimeStampToUnixDateTime>");
+            return "";
+        }
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(ConstantUtils.DEFAULT_DATE_TIME_FORMAT);
+        LocalDateTime localDateTime = LocalDateTime.ofEpochSecond(timeStamp / 1000L, 0, ZoneOffset.UTC);
+        return localDateTime.format(dateTimeFormatter);
     }
 
-    public static long getTimeStamp(){
-        return LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
+    /**
+     * convert unix time stamp(needs to be accurate to milliseconds) to local date time
+     *
+     * @param timeStamp long(milliseconds)
+     * @return String
+     */
+    public static String convertTimeStampToLocalDateTime(long timeStamp) {
+        if (timeStamp < 0) {
+            LOGGER.error("unsupported negative time stamp in method<TimeUtils: convertTimeStampToLocalDateTime>");
+            return "";
+        }
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(ConstantUtils.DEFAULT_DATE_TIME_FORMAT);
+        Instant instant = Instant.ofEpochMilli(timeStamp);
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+        return localDateTime.format(dateTimeFormatter);
+    }
+
+    /**
+     * get unix time stamp with milliseconds, such as 1608472377000L
+     *
+     * @return long
+     */
+    public static long getUnixTimeStamp() {
+        return LocalDateTime.now(ZoneOffset.UTC).atZone(ZoneOffset.UTC).toInstant().toEpochMilli();
     }
 }
