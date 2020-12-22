@@ -1,5 +1,7 @@
 package com.gc.common.entity;
 
+import java.util.List;
+
 /**
  * @author join wick
  * @version 1.0.0
@@ -9,8 +11,22 @@ package com.gc.common.entity;
  * @since 1.0.0
  */
 public class BlockRecord {
+    // block size(4 bytes)
+    private int blockSize;
+    // block header(84 bytes)
     private BlockHeader blockHeader;
-    private BlockBody blockBody;
+    // transaction count in block(4 bytes)
+    private int transactionCount;
+    // transaction list(variable bytes)
+    private List<TransactionRecord> transactionRecordList;
+
+    public int getBlockSize() {
+        return blockSize;
+    }
+
+    public void setBlockSize(int blockSize) {
+        this.blockSize = blockSize;
+    }
 
     public BlockHeader getBlockHeader() {
         return blockHeader;
@@ -20,11 +36,29 @@ public class BlockRecord {
         this.blockHeader = blockHeader;
     }
 
-    public BlockBody getBlockBody() {
-        return blockBody;
+    public int getTransactionCount() {
+        return transactionCount;
     }
 
-    public void setBlockBody(BlockBody blockBody) {
-        this.blockBody = blockBody;
+    public void setTransactionCount(int transactionCount) {
+        this.transactionCount = transactionCount;
+    }
+
+    public List<TransactionRecord> getTransactionRecordList() {
+        return transactionRecordList;
+    }
+
+    public void setTransactionRecordList(List<TransactionRecord> transactionRecordList) {
+        this.transactionRecordList = transactionRecordList;
+    }
+
+    @Override
+    public String toString() {
+        return "BlockRecord{" +
+                "blockSize=" + blockSize +
+                ", blockHeader=" + blockHeader +
+                ", transactionCount=" + transactionCount +
+                ", transactionRecordList=" + transactionRecordList +
+                '}';
     }
 }

@@ -13,24 +13,25 @@ import java.net.SocketAddress;
 /**
  * @author join wick
  * @version 1.0.0
- * @description simple netty handler
- * @createDate 2020/12/22 9:29
+ * @description simple netty client handler
+ * @createDate 2020/12/22 10:01
  * @since 1.0.0
  */
-public class SimpleNettyServerHandler extends ChannelInboundHandlerAdapter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleNettyServerHandler.class);
+public class SimpleNettyClientHandler extends ChannelInboundHandlerAdapter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleNettyClientHandler.class);
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) {
+        String msg = "hello 服务端";
+        ctx.writeAndFlush(Unpooled.copiedBuffer(msg, ConstantUtils.DEFAULT_CHARSET));
+    }
+
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         SocketAddress socketAddress = ctx.channel().remoteAddress();
         ByteBuf byteBuf = (ByteBuf) msg;
         String data = byteBuf.toString(ConstantUtils.DEFAULT_CHARSET);
-        LOGGER.debug("receive data <{}> from client <{}>", data, socketAddress);
-    }
-
-    @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) {
-        String repliedMsg = "hello,客户端...";
-        ctx.writeAndFlush(Unpooled.copiedBuffer(repliedMsg, ConstantUtils.DEFAULT_CHARSET));
+        LOGGER.debug("receive data <{}> from server <{}>", data, socketAddress);
     }
 
     @Override

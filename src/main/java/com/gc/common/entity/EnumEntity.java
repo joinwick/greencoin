@@ -376,5 +376,80 @@ public class EnumEntity {
         }
     }
 
+    public enum ConnectionStatus implements EnumInterface {
+        // good connection
+        GOOD("1", "good connection"),
+        // general connection
+        GENERAL("2", "general connection"),
+        // bad connection
+        BAD("3", "bad connection"),
+        ;
+
+        String value;
+        String label;
+
+        ConnectionStatus(String value, String label) {
+            this.value = value;
+            this.label = label;
+        }
+
+        public static ConnectionStatus getEnumByValue(String value) {
+            for (ConnectionStatus connectionStatus : ConnectionStatus.values()) {
+                if (connectionStatus.value.equals(value)) {
+                    return connectionStatus;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public String getValue() {
+            return this.value;
+        }
+
+        @Override
+        public String getLabel() {
+            return this.label;
+        }
+    }
+
+    public enum NodeType implements EnumInterface {
+        // light node
+        LIGHT("1", "light node"),
+        // general node
+        GENERAL("2", "general node"),
+        // mining node
+        MINING("3", "mining node"),
+        // full node
+        FULL("4", "full node"),
+        ;
+
+        String value;
+        String label;
+
+        NodeType(String value, String label) {
+            this.value = value;
+            this.label = label;
+        }
+
+        public static NodeType getEnumByValue(String value) {
+            for (NodeType nodeType : NodeType.values()) {
+                if (nodeType.value.equals(value)) {
+                    return nodeType;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public String getValue() {
+            return this.value;
+        }
+
+        @Override
+        public String getLabel() {
+            return this.label;
+        }
+    }
 
 }

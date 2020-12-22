@@ -9,5 +9,13 @@ package com.gc.common.entity;
  * @since 1.0.0
  */
 public class TransactionRecord {
+    private String transactionID;
 
+    public String getTransactionID() {
+        return transactionID;
+    }
+
+    public void setTransactionID(String transactionID) {
+        this.transactionID = transactionID;
+    }
 }
