@@ -24,6 +24,8 @@ public final class ConstantUtils {
     public static final int DEFAULT_SERVER_PORT = 9081;
     // default select loop time
     public static final int DEFAULT_SELECTOR_LOOP_TIME = 1000;
+    // default time out
+    public static final int DEFAULT_TIME_OUT = 3000;
     // default buffer size
     public static final int DEFAULT_BYTE_BUFFER_ALLOCATION = 1024;
     // default thread num
