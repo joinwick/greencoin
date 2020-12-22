@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 /**
  * @author join wick
  * @version 1.0.0
- * @className SimpleNettyDiscardServer.java
  * @description simple netty demo
  * @createDate 2020/12/12 14:37
  * @since 1.0.0
@@ -67,8 +66,8 @@ public class SimpleNettyDiscardServer {
             ChannelFuture closeFuture = channelFuture.channel().closeFuture();
             closeFuture.sync();
         } catch (InterruptedException e) {
-            e.printStackTrace();
             LOGGER.error("出现异常:<{}>", e.getMessage());
+            Thread.currentThread().interrupt();
         }finally {
             // 8.关闭EventLoopGroup,释放所有资源(含创建的线程)
             workerLoopGroup.shutdownGracefully();
@@ -79,6 +78,7 @@ public class SimpleNettyDiscardServer {
 
 class NettyDiscardHandler extends ChannelInboundHandlerAdapter{
     private static final Logger LOGGER = LoggerFactory.getLogger(NettyDiscardHandler.class);
+    @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         ByteBuf byteBuf = (ByteBuf) msg;
         try {
