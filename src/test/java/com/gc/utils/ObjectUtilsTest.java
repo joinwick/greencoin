@@ -22,61 +22,61 @@ public class ObjectUtilsTest {
     @Test
     public void getObjectSize_BasicType_Int() {
         int a = 1;
-        assertEquals(256, ObjectUtils.getObjectSize(a));
+        assertEquals(16, ObjectUtils.getObjectSize(a));
     }
 
     @Test
     public void getObjectHeapSize_BasicType_Integer() {
         Integer a = 1;
-        assertEquals(16, ObjectUtils.getObjectHeapSize(a));
+        assertEquals(16, ObjectUtils.getObjectSize(a));
     }
 
     @Test
     public void getObjectHeapSize_BasicType_Boolean() {
         boolean a = true;
-        assertEquals(16, ObjectUtils.getObjectHeapSize(a));
+        assertEquals(16, ObjectUtils.getObjectSize(a));
     }
 
     @Test
     public void getObjectHeapSize_BasicType_Byte() {
         byte a = 1;
-        assertEquals(16, ObjectUtils.getObjectHeapSize(a));
+        assertEquals(16, ObjectUtils.getObjectSize(a));
     }
 
     @Test
     public void getObjectHeapSize_BasicType_Short() {
         short a = 1;
-        assertEquals(16, ObjectUtils.getObjectHeapSize(a));
+        assertEquals(16, ObjectUtils.getObjectSize(a));
     }
 
     @Test
     public void getObjectHeapSize_BasicType_Char() {
         char a = '1';
-        assertEquals(16, ObjectUtils.getObjectHeapSize(a));
+        assertEquals(16, ObjectUtils.getObjectSize(a));
     }
 
     @Test
     public void getObjectHeapSize_BasicType_Int() {
         int a = 1;
-        assertEquals(16, ObjectUtils.getObjectHeapSize(a));
+        assertEquals(16, ObjectUtils.getObjectSize(a));
     }
 
     @Test
     public void getObjectHeapSize_BasicType_Long() {
         long a = 1L;
-        assertEquals(24, ObjectUtils.getObjectHeapSize(a));
+        assertEquals(24, ObjectUtils.getObjectSize(a));
     }
 
     @Test
     public void getObjectHeapSize_BasicType_Float() {
         float a = 1.0f;
-        assertEquals(16, ObjectUtils.getObjectHeapSize(a));
+        assertEquals(16, ObjectUtils.getObjectSize(a));
     }
 
     @Test
     public void getObjectHeapSize_BasicType_Double() {
         double a = 1.0;
-        assertEquals(24, ObjectUtils.getObjectHeapSize(a));
+        assertEquals(24, ObjectUtils.getObjectSize(a));
     }
 
     @Test
@@ -87,7 +87,7 @@ public class ObjectUtilsTest {
         blockHeader.setNonce(1);
         blockHeader.setPreBlockHashValue("123123123123123");
         blockHeader.setMerkleRootHashValue("123123123123123");
-        assertEquals(40, ObjectUtils.getObjectHeapSize(blockHeader));
+        assertEquals(40, ObjectUtils.getObjectSize(blockHeader));
     }
 
     @Test
@@ -109,7 +109,40 @@ public class ObjectUtilsTest {
         transactionRecordList.add(transactionRecord);
         blockRecord.setTransactionRecordList(transactionRecordList);
 
-        assertEquals(32, ObjectUtils.getObjectHeapSize(blockRecord));
+        assertEquals(32, ObjectUtils.getObjectSize(blockRecord));
+    }
+
+    @Test
+    public void getObjectTotalSize_BasicType_BaseObject() {
+        BlockHeader blockHeader = new BlockHeader();
+        blockHeader.setVersion(1);
+        blockHeader.setTimeStamp(10L);
+        blockHeader.setNonce(1);
+        blockHeader.setPreBlockHashValue("123123123123123");
+        blockHeader.setMerkleRootHashValue("123123123123123");
+        assertEquals(112, ObjectUtils.getObjectTotalSize(blockHeader));
+    }
+
+    @Test
+    public void getObjectTotalSize_BasicType_ComplexObject() {
+        BlockHeader blockHeader = new BlockHeader();
+        blockHeader.setVersion(1);
+        blockHeader.setTimeStamp(10L);
+        blockHeader.setNonce(1);
+        blockHeader.setPreBlockHashValue("123123123123123");
+        blockHeader.setMerkleRootHashValue("123123123123123");
+
+        BlockRecord blockRecord = new BlockRecord();
+        blockRecord.setBlockHeader(blockHeader);
+        blockRecord.setBlockSize(1357503);
+        blockRecord.setTransactionCount(2079);
+        List<TransactionRecord> transactionRecordList = new ArrayList<>();
+        TransactionRecord transactionRecord = new TransactionRecord();
+        transactionRecord.setTransactionID("123123123123123");
+        transactionRecordList.add(transactionRecord);
+        blockRecord.setTransactionRecordList(transactionRecordList);
+
+        assertEquals(240, ObjectUtils.getObjectTotalSize(blockRecord));
     }
 
     @Test
@@ -120,7 +153,7 @@ public class ObjectUtilsTest {
         blockHeader.setNonce(1);
         blockHeader.setPreBlockHashValue("123123123123123");
         blockHeader.setMerkleRootHashValue("123123123123123");
-        assertEquals(256, ObjectUtils.getObjectSize(blockHeader));
+        assertEquals(40, ObjectUtils.getObjectSize(blockHeader));
     }
 
 
