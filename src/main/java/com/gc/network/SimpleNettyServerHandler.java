@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.SocketAddress;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author join wick
@@ -21,10 +22,31 @@ public class SimpleNettyServerHandler extends ChannelInboundHandlerAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleNettyServerHandler.class);
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        SocketAddress socketAddress = ctx.channel().remoteAddress();
-        ByteBuf byteBuf = (ByteBuf) msg;
-        String data = byteBuf.toString(ConstantUtils.DEFAULT_CHARSET);
-        LOGGER.debug("receive data <{}> from client <{}>", data, socketAddress);
+        ctx.channel().eventLoop().execute(() -> {
+            try {
+                Thread.sleep(10 * 1000L);
+                ctx.writeAndFlush(Unpooled.copiedBuffer("process client business-0", ConstantUtils.DEFAULT_CHARSET));
+            } catch (InterruptedException e) {
+                LOGGER.debug("exception with <{}>", e.getMessage());
+                Thread.currentThread().interrupt();
+            }
+        });
+
+        ctx.channel().eventLoop().schedule(() -> {
+            try {
+                Thread.sleep(10 * 1000L);
+                ctx.writeAndFlush(Unpooled.copiedBuffer("process client business-1", ConstantUtils.DEFAULT_CHARSET));
+            } catch (InterruptedException e) {
+                LOGGER.debug("exception with <{}>", e.getMessage());
+                Thread.currentThread().interrupt();
+            }
+
+        }, 5, TimeUnit.SECONDS);
+//        SocketAddress socketAddress = ctx.channel().remoteAddress();
+//        ByteBuf byteBuf = (ByteBuf) msg;
+//        String data = byteBuf.toString(ConstantUtils.DEFAULT_CHARSET);
+//        LOGGER.debug("receive data <{}> from client <{}>", data, socketAddress);
+        LOGGER.debug("non-block");
     }
 
     @Override
