@@ -1,6 +1,7 @@
 package com.gc.utils;
 
-import org.apache.lucene.util.RamUsageEstimator;
+import org.openjdk.jol.info.ClassLayout;
+import org.openjdk.jol.info.GraphLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,8 +15,10 @@ import org.slf4j.LoggerFactory;
 public class ObjectUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(ObjectUtils.class);
 
+    private ObjectUtils(){}
+
     /**
-     * get object & reference object size, bytes
+     * get object size, bytes
      *
      * @param obj Object
      * @return long
@@ -25,20 +28,20 @@ public class ObjectUtils {
             LOGGER.error("object is null in method <ObjectUtils: getObjectSize>");
             return 0L;
         }
-        return RamUsageEstimator.sizeOfObject(obj);
+        return ClassLayout.parseInstance(obj).instanceSize();
     }
 
     /**
-     * get object & reference object heap size, bytes
+     * get object & reference object size, bytes
      *
      * @param obj Object
      * @return long
      */
-    public static long getObjectHeapSize(Object obj) {
+    public static long getObjectTotalSize(Object obj) {
         if (obj == null) {
-            LOGGER.error("object is null in method <ObjectUtils: getObjectHeapSize>");
+            LOGGER.error("object is null in method <ObjectUtils: getObjectTotalSize>");
             return 0L;
         }
-        return RamUsageEstimator.shallowSizeOf(obj);
+        return GraphLayout.parseInstance(obj).totalSize();
     }
 }
