@@ -19,6 +19,10 @@ public enum SystemCode {
     KEY_NOT_EXISTS("B0104"),
     VALUE_IS_EMPTY("B0105"),
 
+    // calculate exception
+    CALCULATION_EXCEPTION("B0200"),
+    DIVISOR_IS_ZERO("B0201"),
+
     // system resource exception
     SYSTEM_RESOURCE_EXCEPTION("B0300"),
     SYSTEM_RESOURCE_EXHAUSTION("B0310"),

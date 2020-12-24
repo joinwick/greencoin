@@ -32,6 +32,32 @@ public class StringUtils {
     }
 
     /**
+     * padding str with fixed str
+     *
+     * @param str           String,initial context
+     * @param paddingStr    String, fixed padding str
+     * @param paddingLength int,padding length
+     * @param appendFlag    boolean,true[left padding],false[right padding]
+     * @return String
+     */
+    public static String paddingIterator(String str, String paddingStr, int paddingLength, boolean appendFlag) {
+        if (CommonUtils.isEmpty(paddingStr) || paddingLength == 0) {
+            LOGGER.debug("no need to padding");
+            return str;
+        }
+        // length of fixed padding str
+        int paddingStrLength = paddingStr.length();
+        // paddingStrLength > paddingLength
+        if (paddingStrLength > paddingLength) {
+            paddingStr = paddingStr.substring(0, paddingLength);
+            return appendByCondition(str, paddingStr, appendFlag);
+        }
+        str = appendByCondition(str, paddingStr, appendFlag);
+        paddingLength -= paddingStrLength;
+        return paddingIterator(str, paddingStr, paddingLength, appendFlag);
+    }
+
+    /**
      * convert string to byte[]
      *
      * @param str String

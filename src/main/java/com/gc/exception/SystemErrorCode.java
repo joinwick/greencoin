@@ -19,6 +19,10 @@ public enum SystemErrorCode implements ErrorCode {
     KEY_NOT_EXISTS(SystemCode.KEY_NOT_EXISTS, "key不存在"),
     VALUE_IS_EMPTY(SystemCode.VALUE_IS_EMPTY, "value值为空"),
 
+    // calculation exception
+    CALCULATION_EXCEPTION(SystemCode.CALCULATION_EXCEPTION, "数据计算异常"),
+    DIVISOR_IS_ZERO(SystemCode.DIVISOR_IS_ZERO, "除数不能为零"),
+
     // system resource exception
     SYSTEM_RESOURCE_EXCEPTION(SystemCode.SYSTEM_RESOURCE_EXCEPTION, "系统资源异常"),
     SYSTEM_RESOURCE_EXHAUSTION(SystemCode.SYSTEM_RESOURCE_EXHAUSTION, "系统资源耗尽"),

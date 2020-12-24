@@ -60,5 +60,20 @@ public final class ConstantUtils {
     public static final String DEFAULT_SYMMETRIC_KEY = "SymmetricKey";
     // default date time format
     public static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    // default hash length(hex format)
+    public static final int DEFAULT_HASH_HEX_LENGTH = 64;
+    // default hash length(binary format)
+    public static final int DEFAULT_HASH_BINARY_LENGTH = 256;
+    // default zero string
+    public static final String DEFAULT_ZERO_STRING = "0";
+    // default hex string format
+    public static final String DEFAULT_HEX_STRING_FORMAT = "%08x";
+    // default append flag(true-left padding, false-right padding)
+    public static final boolean DEFAULT_APPEND_FLAG = true;
+
+    public static final BigInteger DEFAULT_POWER_BASE = BigInteger.valueOf(2);
+
+    public static final String DEFAULT_GC_EXTREME_DIFFICULTY = "00000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
+    public static final String DEFAULT_GC_INITIAL_DIFFICULTY = "00000000FFFF0000000000000000000000000000000000000000000000000000";
 
 }
