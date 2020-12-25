@@ -27,8 +27,10 @@ public class ConvertUtilsTest {
 
     @Test
     public void convertTenToHex_ValidEntry() {
-        String res = ConvertUtils.convertTenToHex(targetString);
-        LOGGER.debug("res = <{}>", res);
+        String expectedRes = "0000000000000003a30c00000000000000000000000000000000000000000000";
+        String actualRes = ConvertUtils.convertTenToHex(targetString);
+        assertEquals(expectedRes, actualRes);
+
 
     }
 }

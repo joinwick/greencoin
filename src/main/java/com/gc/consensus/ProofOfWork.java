@@ -43,25 +43,43 @@ public class ProofOfWork {
     }
 
     /**
-     * get target(binary string),formula is as follows:
+     * get target(decimal system),formula is as follows:
      * coefficientHexString * (2^(8 * (exponentHexString - 3)))
      *
      * @param exponentHexString    String
      * @param coefficientHexString String
      * @return String
      */
-    private String getTarget(String exponentHexString, String coefficientHexString) {
+    private String getDecimalTarget(String exponentHexString, String coefficientHexString) {
         if (CommonUtils.isEmpty(exponentHexString) || CommonUtils.isEmpty(coefficientHexString)) {
-            LOGGER.error("empty data input in method<ProofOfWork: getTarget>");
+            LOGGER.error("empty data input in method<ProofOfWork: getDecimalTarget>");
             return "";
         }
         BigInteger exponent = new BigInteger(ConvertUtils.convertHexToTen(exponentHexString));
         BigInteger coefficient = new BigInteger(ConvertUtils.convertHexToTen(coefficientHexString));
-        BigInteger target = BigIntegerUtils.multiply(coefficient,
+        // get target with decimal format
+        BigInteger decimalTarget = BigIntegerUtils.multiply(coefficient,
                 BigIntegerUtils.pow(ConstantUtils.DEFAULT_POWER_BASE,
                         BigIntegerUtils.multiply(BigInteger.valueOf(8),
                                 BigIntegerUtils.subtract(exponent, BigInteger.valueOf(3)))));
-        return target.toString();
+        return decimalTarget.toString();
+    }
+
+    /**
+     * convert decimal format to binary format
+     *
+     * @param decimalTarget String
+     * @return String
+     */
+    private String getBinaryTarget(String decimalTarget) {
+        if (CommonUtils.isEmpty(decimalTarget)) {
+            LOGGER.error("empty data in method<ProofOfWork: getBinaryTarget>");
+            return "";
+        }
+        // convert decimal to binary
+        String binaryTarget = "";
+
+        return binaryTarget;
     }
 
     /**

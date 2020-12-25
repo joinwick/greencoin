@@ -56,4 +56,8 @@ public class ConvertUtils {
         return "";
 
     }
+
+    public static String convertDecimalToBinary(String decimalString){
+        return "";
+    }
 }
