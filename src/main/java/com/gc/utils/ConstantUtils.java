@@ -64,6 +64,8 @@ public final class ConstantUtils {
     public static final int DEFAULT_HASH_HEX_LENGTH = 64;
     // default hash length(binary format)
     public static final int DEFAULT_HASH_BINARY_LENGTH = 256;
+    // default hex string
+    public static final String DEFAULT_HEX_STRING = "0123456789abcdef";
     // default zero string
     public static final String DEFAULT_ZERO_STRING = "0";
     // default hex string format

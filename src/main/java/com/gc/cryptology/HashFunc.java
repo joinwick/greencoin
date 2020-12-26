@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class HashFunc {
     private static final Logger LOGGER = LoggerFactory.getLogger(HashFunc.class);
+    private final BaseCodec baseCodec = new BaseCodec();
 
     /**
      * get hex string
@@ -33,7 +34,8 @@ public class HashFunc {
         }
         byte[] initialData = data.getBytes(ConstantUtils.DEFAULT_CHARSET);
         byte[] hashData = getHashedData(initialData, hashAlgorithm);
-        return StringUtils.convertByteArrayToString(hashData);
+        return StringUtils.convertByteArrayToHexString(hashData);
+//        return baseCodec.base64Encode(hashData);
     }
 
     /**

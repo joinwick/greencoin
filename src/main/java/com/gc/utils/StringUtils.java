@@ -80,9 +80,50 @@ public class StringUtils {
     public static String convertByteArrayToString(byte[] bytes) {
         if (CommonUtils.isEmpty(bytes)) {
             LOGGER.error("empty byte array in method <StringUtils: convertByteArrayToString>");
-            return null;
+            return "";
         }
         return new String(bytes, ConstantUtils.DEFAULT_CHARSET);
+    }
+
+    /**
+     * convert byte array to hex string
+     *
+     * @param bytes byte[]
+     * @return String
+     */
+    public static String convertByteArrayToHexString(byte[] bytes) {
+        if (CommonUtils.isEmpty(bytes)) {
+            LOGGER.error("empty byte array in method <StringUtils: convertByteArrayToHexString>");
+            return "";
+        }
+        int byteLength = bytes.length;
+        char[] hexArray = ConstantUtils.DEFAULT_HEX_STRING.toCharArray();
+        char[] hexChars = new char[byteLength * 2];
+        for (int i = 0; i < byteLength; i++) {
+            int tempInt = bytes[i] & 0xFF;
+            hexChars[i * 2] = hexArray[tempInt >>> 4];
+            hexChars[i * 2 + 1] = hexArray[tempInt & 0x0F];
+        }
+        return new String(hexChars);
+    }
+
+    /**
+     * convert hex string to byte array
+     *
+     * @param hexString String
+     * @return byte[]
+     */
+    public static byte[] convertHexStringToByteArray(String hexString) {
+        if (CommonUtils.isEmpty(hexString)) {
+            LOGGER.error("empty data in method <StringUtils: convertHexStringToByteArray>");
+            return new byte[0];
+        }
+        byte[] byteArray = new byte[hexString.length() / 2];
+        for (int i = 0; i < byteArray.length; i++) {
+            String subStr = hexString.substring(2 * i, 2 * i + 2);
+            byteArray[i] = ((byte) Integer.parseInt(subStr, 16));
+        }
+        return byteArray;
     }
 
     /**
