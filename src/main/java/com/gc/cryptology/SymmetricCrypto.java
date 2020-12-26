@@ -5,7 +5,6 @@ import com.gc.common.inter.BaseCryptologyInterface;
 import com.gc.exception.GCException;
 import com.gc.exception.SystemErrorCode;
 import com.gc.utils.CommonUtils;
-import com.gc.utils.StringUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,7 +81,7 @@ public class SymmetricCrypto implements BaseCryptologyInterface {
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             decryptData = cipher.doFinal(data);
         } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException e) {
-            e.printStackTrace();
+            LOGGER.error("decrypt data failed with reason <{}>", e.getMessage());
         }
         return decryptData;
     }
@@ -140,7 +139,7 @@ public class SymmetricCrypto implements BaseCryptologyInterface {
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             decryptData = cipher.doFinal(data);
         } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException e) {
-            e.printStackTrace();
+            LOGGER.error("decrypt data failed with reason <{}>", e.getMessage());
         }
         return decryptData;
     }
