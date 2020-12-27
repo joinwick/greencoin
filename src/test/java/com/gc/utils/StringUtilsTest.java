@@ -19,6 +19,34 @@ public class StringUtilsTest {
     String paddingStr = "UT";
 
     @Test
+    public void appendByCondition_True() {
+        String expectedRes = "UTgc<StringUtilsTest>";
+        assertEquals(expectedRes, StringUtils.appendByCondition(initialStr, paddingStr, true));
+    }
+
+    @Test
+    public void appendByCondition_False() {
+        String expectedRes = "gc<StringUtilsTest>UT";
+        assertEquals(expectedRes, StringUtils.appendByCondition(initialStr, paddingStr, false));
+    }
+
+    @Test
+    public void convertStringToByteArray_ValidEntry() {
+        String str = "12";
+        byte[] expectedRes = new byte[]{49, 50};
+        byte[] actualRes = StringUtils.convertStringToByteArray(str);
+        assertArrayEquals(expectedRes, actualRes);
+    }
+
+    @Test
+    public void convertByteArrayToString_ValidEntry() {
+        byte[] initialBytes = new byte[]{49, 50};
+        String expectedRes = "12";
+        String actualRes = StringUtils.convertByteArrayToString(initialBytes);
+        assertEquals(expectedRes, actualRes);
+    }
+
+    @Test
     public void paddingIterator_EqualLeftPadding() {
         int paddingLength = 2;
         String expectedRes = "UTgc<StringUtilsTest>";
@@ -38,4 +66,6 @@ public class StringUtilsTest {
         String expectedRes = "Ugc<StringUtilsTest>";
         assertEquals(expectedRes, StringUtils.paddingIterator(initialStr, paddingStr, paddingLength, true));
     }
+
+
 }
