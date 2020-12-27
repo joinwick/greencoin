@@ -37,6 +37,11 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<HttpObject> {
             LOGGER.debug("msg type = <{}>, client info = <{}>, pipeline hashcode = <{}>, HttpServerHandler hash = <{}>",
                     msg.getClass(), socketAddress, ctx.pipeline().hashCode(), this.hashCode());
 
+            LOGGER.debug("channel = <{}>, pipeline = <{}>, get channel by pipeline = <{}>, get pipeline by channel = <{}>",
+                    ctx.channel(), ctx.pipeline(), ctx.pipeline().channel(), ctx.channel().pipeline());
+
+            LOGGER.debug("current handler = <{}>", ctx.handler());
+
 
             // 获取到请求资源的URI
             HttpRequest httpRequest = (HttpRequest) msg;
