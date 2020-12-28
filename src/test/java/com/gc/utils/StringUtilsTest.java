@@ -80,11 +80,8 @@ public class StringUtilsTest {
     @Test
     public void convertHexStringToByteArray() {
         String initialStr = "61626364";
-        byte[] expectedRes = new byte[]{97, 98, 99, 100};
+        byte[] expectedRes = new byte[]{'a', 'b', 'c', 'd'};
         byte[] actualRes = StringUtils.convertHexStringToByteArray(initialStr);
-        for (byte b : actualRes){
-            LOGGER.debug("b = <{}>", b);
-        }
-        assertEquals(expectedRes, actualRes);
+        assertArrayEquals(expectedRes, actualRes);
     }
 }
