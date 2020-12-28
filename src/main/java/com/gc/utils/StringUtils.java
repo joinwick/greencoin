@@ -3,6 +3,8 @@ package com.gc.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigInteger;
+
 /**
  * @author join wick
  * @version 1.0.0
@@ -86,6 +88,20 @@ public class StringUtils {
     }
 
     /**
+     * convert byte array to binary string
+     *
+     * @param bytes byte[]
+     * @return String
+     */
+    public static String convertByteArrayToBinaryString(byte[] bytes) {
+        if (CommonUtils.isEmpty(bytes)) {
+            LOGGER.error("empty byte array in method <StringUtils: convertByteArrayToBinaryString>");
+            return "";
+        }
+        return convertByteArrayToSpecialFormat(bytes, 2);
+    }
+
+    /**
      * convert byte array to hex string
      *
      * @param bytes byte[]
@@ -93,18 +109,21 @@ public class StringUtils {
      */
     public static String convertByteArrayToHexString(byte[] bytes) {
         if (CommonUtils.isEmpty(bytes)) {
-            LOGGER.error("empty byte array in method <StringUtils: convertByteArrayToHexString>");
+            LOGGER.error("empty byte array in method <StringUtils: convertByteArrayToHexStrings>");
             return "";
         }
-        int byteLength = bytes.length;
-        char[] hexArray = ConstantUtils.DEFAULT_HEX_STRING.toCharArray();
-        char[] hexChars = new char[byteLength * 2];
-        for (int i = 0; i < byteLength; i++) {
-            int tempInt = bytes[i] & 0xFF;
-            hexChars[i * 2] = hexArray[tempInt >>> 4];
-            hexChars[i * 2 + 1] = hexArray[tempInt & 0x0F];
-        }
-        return new String(hexChars);
+        return convertByteArrayToSpecialFormat(bytes, 16);
+    }
+
+    /**
+     * convert byte array to special format
+     *
+     * @param bytes byte[]
+     * @param radix int
+     * @return String
+     */
+    private static String convertByteArrayToSpecialFormat(byte[] bytes, int radix) {
+        return new BigInteger(1, bytes).toString(radix);
     }
 
     /**

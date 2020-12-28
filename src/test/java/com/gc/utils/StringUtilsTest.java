@@ -84,4 +84,13 @@ public class StringUtilsTest {
         byte[] actualRes = StringUtils.convertHexStringToByteArray(initialStr);
         assertArrayEquals(expectedRes, actualRes);
     }
+
+    @Test
+    public void findStrByLoop_ValidEntry() {
+        String searchStr = "ut";
+        String[] initialArray = {"gc", searchStr, "test"};
+        int expectedRes = 1;
+        int actualRes = StringUtils.findStrByLoop(initialArray, searchStr);
+        assertEquals(expectedRes, actualRes);
+    }
 }
