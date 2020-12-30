@@ -43,7 +43,7 @@ public class WebSocketServer {
         ServerBootstrap serverBootstrap = new ServerBootstrap();
         serverBootstrap.group(bossGroup, workerGroup)
                 .channel(NioServerSocketChannel.class)
-                .option(ChannelOption.SO_BACKLOG, 128)
+                .option(ChannelOption.SO_BACKLOG, 1024)
                 .option(ChannelOption.SO_REUSEADDR, true)
                 .childOption(ChannelOption.SO_KEEPALIVE, true)
                 .childOption(ChannelOption.TCP_NODELAY, true)
@@ -99,6 +99,8 @@ class WebSocketServerHandler extends SimpleChannelInboundHandler<TextWebSocketFr
         LOGGER.debug("receive msg<{}> from client", clientMsg);
         // 回复信息至客户端
         TextWebSocketFrame repliedMsg = new TextWebSocketFrame("服务器时间" + LocalDateTime.now() + ":" + msg.text());
+        String repliedStr = repliedMsg.text();
+        LOGGER.debug("replied msg<{}> from server", repliedStr);
         ctx.channel().writeAndFlush(repliedMsg);
     }
 
@@ -110,17 +112,13 @@ class WebSocketServerHandler extends SimpleChannelInboundHandler<TextWebSocketFr
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) {
         String longText = ctx.channel().id().asLongText();
-        String shortText = ctx.channel().id().asShortText();
         LOGGER.debug("handlerAdded <{}> is called", longText);
-        LOGGER.debug("handlerAdded <{}> is called", shortText);
     }
 
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) {
         String longText = ctx.channel().id().asLongText();
-        String shortText = ctx.channel().id().asShortText();
         LOGGER.debug("handlerRemoved <{}> is called", longText);
-        LOGGER.debug("handlerRemoved <{}> is called", shortText);
     }
 
     @Override

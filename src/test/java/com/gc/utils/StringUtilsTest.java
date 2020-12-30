@@ -54,10 +54,24 @@ public class StringUtilsTest {
     }
 
     @Test
+    public void paddingIterator_EqualRightPadding() {
+        int paddingLength = 2;
+        String expectedRes = "gc<StringUtilsTest>UT";
+        assertEquals(expectedRes, StringUtils.paddingIterator(initialStr, paddingStr, paddingLength, false));
+    }
+
+    @Test
     public void paddingIterator_LargeLeftPadding() {
         int paddingLength = 3;
         String expectedRes = "UUTgc<StringUtilsTest>";
         assertEquals(expectedRes, StringUtils.paddingIterator(initialStr, paddingStr, paddingLength, true));
+    }
+
+    @Test
+    public void paddingIterator_LargeRightPadding() {
+        int paddingLength = 3;
+        String expectedRes = "gc<StringUtilsTest>UTU";
+        assertEquals(expectedRes, StringUtils.paddingIterator(initialStr, paddingStr, paddingLength, false));
     }
 
     @Test
@@ -67,6 +81,21 @@ public class StringUtilsTest {
         assertEquals(expectedRes, StringUtils.paddingIterator(initialStr, paddingStr, paddingLength, true));
     }
 
+    @Test
+    public void paddingIterator_LessRightPadding() {
+        int paddingLength = 1;
+        String expectedRes = "gc<StringUtilsTest>U";
+        assertEquals(expectedRes, StringUtils.paddingIterator(initialStr, paddingStr, paddingLength, false));
+    }
+
+    @Test
+    public void convertByteArrayToBinaryString_ValidEntry() {
+        byte[] initialBytes = new byte[]{'a', 'b', 'c', 'd'};
+        String expectedRes = "1100001011000100110001101100100";
+        String actualRes = StringUtils.convertByteArrayToBinaryString(initialBytes);
+        LOGGER.debug("actualRes = <{}>", actualRes);
+        assertEquals(expectedRes, actualRes);
+    }
 
     @Test
     public void convertByteArrayToHexString_ValidEntry() {

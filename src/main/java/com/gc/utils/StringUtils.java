@@ -109,7 +109,7 @@ public class StringUtils {
      */
     public static String convertByteArrayToHexString(byte[] bytes) {
         if (CommonUtils.isEmpty(bytes)) {
-            LOGGER.error("empty byte array in method <StringUtils: convertByteArrayToHexStrings>");
+            LOGGER.error("empty byte array in method <StringUtils: convertByteArrayToHexString>");
             return "";
         }
         return convertByteArrayToSpecialFormat(bytes, 16);

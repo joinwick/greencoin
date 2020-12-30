@@ -5,49 +5,52 @@
     <title>WebSocketTest</title>
 </head>
 <body>
-    <script>
+    <form onsubmit="return false">
+        <textarea id="message" style="height: 300px; width: 300px"></textarea>
+        <input type="button" value="发送消息" onclick="send(this.form.message.value)">
+        <textarea id="responseText" style="height: 300px; width: 300px"></textarea>
+        <input type="button" value="清空消息" onclick="document.getElementById('responseText').value=''">
+    </form>
+</body>
+<script type="text/javascript" >
         var socket;
         if(window.WebSocket){
             socket = new WebSocket("ws://localhost:9081/hello");
 
-            socket.onmessage = function(ev){
-                var responseMsg = document.getElementById("response");
-                responseMsg.value = responseMsg.value + "\n" + ev.data;
+            // 接收服务器返回的消息
+            socket.onmessage = function(event){
+                console.debug("WebSocket message received:", event);
+                var responseMsg = document.getElementById('responseText');
+                responseMsg.value = responseMsg.value + "\n" + event.data;
+                console.debug("response message received:", responseMsg.value);
             }
 
-            socket.onopen = function(ev){
-                var responseMsg = document.getElementById("response");
+            // 连接开启
+            socket.onopen = function(event){
+                var responseMsg = document.getElementById('responseText');
                 responseMsg.value = "连接开启了...";
             }
 
-            socket.onclose = function(ev){
-                var responseMsg = document.getElementById("response");
+            // 连接关闭
+            socket.onclose = function(event){
+                var responseMsg = document.getElementById('responseText');
                 responseMsg.value = responseMsg.value + "\n" + "连接断开了...";
             }
         }
         else{
-            alert("当前浏览器不支持WS");
+            alert("当前浏览器不支持webSocket");
         }
-
+        // 发送消息至服务器
         function send(message){
             if(!window.socket){
                 return;
             }
-            if(socket.readState == WebSocket.OPEN){
+            if(socket.readyState == WebSocket.OPEN){
                 socket.send(message);
             }
             else{
                 alert("连接未开启...");
             }
         }
-
     </script>
-
-    <form onsubmit="return false">
-        <textarea name="message" style="height: 300px; width: 300px"></textarea>
-        <input type="button" value="发送消息" onclick="send(this.form.message.value)">
-        <textarea name="response" style="height: 300px; width: 300px"></textarea>
-        <input type="button" value="清空消息" onclick="document.getElementById('response').value=''">
-    </form>
-</body>
 </html>
