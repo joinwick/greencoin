@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  */
 public class HashFunc {
     private static final Logger LOGGER = LoggerFactory.getLogger(HashFunc.class);
-    private final BaseCodec baseCodec = new BaseCodec();
 
     /**
      * get hex string

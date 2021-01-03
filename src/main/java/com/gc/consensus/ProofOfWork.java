@@ -19,27 +19,25 @@ import java.math.BigInteger;
 public class ProofOfWork {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProofOfWork.class);
 
-    public static void main(String[] args) {
-        String bitString = "0x1903a30c";
-        String exponentHexString = bitString.substring(2, 4);
-        String coefficientHexString = bitString.substring(4, 10);
-        LOGGER.debug("exponentHexString = <{}>", exponentHexString);
-        LOGGER.debug("coefficientHexString = <{}>", coefficientHexString);
-    }
-
+    /**
+     * convert bits to binary target
+     * @param bitString String
+     * @return  String
+     */
     public String convertBitsToBinaryTarget(String bitString) {
         if (CommonUtils.isEmpty(bitString)) {
             LOGGER.error("empty data in method<ProofOfWork: convertBitsToBinaryTarget>");
             return "";
         }
-        if (bitString.length() < 10) {
+        if (bitString.length() < ConstantUtils.DEFAULT_VALID_TARGET_LENGTH) {
             LOGGER.error("invalid data in method<ProofOfWork: convertBitsToBinaryTarget>");
             return "";
         }
         String exponentHexString = bitString.substring(2, 4);
         String coefficientHexString = bitString.substring(4, 10);
-
-        return "";
+        String decimalTargetString = getDecimalTarget(exponentHexString, coefficientHexString);
+        // convert decimal to binary
+        return ConvertUtils.convertSourceFormatToSpecialFormat(decimalTargetString, 10, 2);
     }
 
     /**
@@ -55,31 +53,14 @@ public class ProofOfWork {
             LOGGER.error("empty data input in method<ProofOfWork: getDecimalTarget>");
             return "";
         }
-        BigInteger exponent = new BigInteger(ConvertUtils.convertHexToTen(exponentHexString));
-        BigInteger coefficient = new BigInteger(ConvertUtils.convertHexToTen(coefficientHexString));
+        BigInteger exponent = new BigInteger(ConvertUtils.convertSourceFormatToSpecialFormat(exponentHexString, 16, 10));
+        BigInteger coefficient = new BigInteger(ConvertUtils.convertSourceFormatToSpecialFormat(coefficientHexString, 16, 10));
         // get target with decimal format
         BigInteger decimalTarget = BigIntegerUtils.multiply(coefficient,
                 BigIntegerUtils.pow(ConstantUtils.DEFAULT_POWER_BASE,
                         BigIntegerUtils.multiply(BigInteger.valueOf(8),
                                 BigIntegerUtils.subtract(exponent, BigInteger.valueOf(3)))));
         return decimalTarget.toString();
-    }
-
-    /**
-     * convert decimal format to binary format
-     *
-     * @param decimalTarget String
-     * @return String
-     */
-    private String getBinaryTarget(String decimalTarget) {
-        if (CommonUtils.isEmpty(decimalTarget)) {
-            LOGGER.error("empty data in method<ProofOfWork: getBinaryTarget>");
-            return "";
-        }
-        // convert decimal to binary
-        String binaryTarget = "";
-
-        return binaryTarget;
     }
 
     /**

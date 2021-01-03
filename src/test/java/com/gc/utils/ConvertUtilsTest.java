@@ -20,17 +20,20 @@ public class ConvertUtilsTest {
     String targetString = "22829202948393929850749706076701368331072452018388575715328";
 
     @Test
-    public void convertHexToTen_ValidEntry() {
+    public void convertSourceFormatToSpecialFormat_HexToTen(){
         String expectedRes = "419668748";
-        assertEquals(expectedRes, ConvertUtils.convertHexToTen(hexString));
+        assertEquals(expectedRes, ConvertUtils.convertSourceFormatToSpecialFormat(hexString, 16, 10));
     }
 
     @Test
-    public void convertTenToHex_ValidEntry() {
+    public void convertSourceFormatToSpecialFormat_TenToHex() {
         String expectedRes = "0000000000000003a30c00000000000000000000000000000000000000000000";
-        String actualRes = ConvertUtils.convertTenToHex(targetString);
+        String actualRes = ConvertUtils.convertSourceFormatToSpecialFormat(targetString, 10, 16);
+        LOGGER.debug("initial actualRes(hex) is <{}>", actualRes);
+        actualRes = StringUtils.paddingIterator(actualRes,
+                ConstantUtils.DEFAULT_ZERO_STRING,
+                ConstantUtils.DEFAULT_HASH_HEX_LENGTH - actualRes.length(),
+                ConstantUtils.DEFAULT_APPEND_FLAG);
         assertEquals(expectedRes, actualRes);
-
-
     }
 }

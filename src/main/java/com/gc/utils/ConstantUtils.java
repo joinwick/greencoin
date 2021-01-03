@@ -129,11 +129,19 @@ public final class ConstantUtils {
      */
     public static final boolean DEFAULT_APPEND_FLAG = true;
     /**
-     * default
+     * default power base
      */
     public static final BigInteger DEFAULT_POWER_BASE = BigInteger.valueOf(2);
-
-    public static final String DEFAULT_GC_EXTREME_DIFFICULTY = "00000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
-    public static final String DEFAULT_GC_INITIAL_DIFFICULTY = "00000000FFFF0000000000000000000000000000000000000000000000000000";
-
+    /**
+     * default valid target length
+     */
+    public static final int DEFAULT_VALID_TARGET_LENGTH = 10;
+    /**
+     * default minimum format
+     */
+    public static final int DEFAULT_MIN_FORMAT = 2;
+    /**
+     * default maximum format
+     */
+    public static final int DEFAULT_MAX_FORMAT = 30;
 }
