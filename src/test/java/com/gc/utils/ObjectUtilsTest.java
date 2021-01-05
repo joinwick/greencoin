@@ -1,6 +1,6 @@
 package com.gc.utils;
 
-import com.gc.common.entity.BlockHeader;
+import com.gc.common.entity.BlockHeaderRecord;
 import com.gc.common.entity.BlockRecord;
 import com.gc.common.entity.TransactionRecord;
 import org.junit.Test;
@@ -81,7 +81,7 @@ public class ObjectUtilsTest {
 
     @Test
     public void getObjectHeapSize_BasicType_BaseObject() {
-        BlockHeader blockHeader = new BlockHeader();
+        BlockHeaderRecord blockHeader = new BlockHeaderRecord();
         blockHeader.setVersion(1);
         blockHeader.setTimeStamp(10L);
         blockHeader.setNonce(1);
@@ -92,7 +92,7 @@ public class ObjectUtilsTest {
 
     @Test
     public void getObjectHeapSize_BasicType_ComplexObject() {
-        BlockHeader blockHeader = new BlockHeader();
+        BlockHeaderRecord blockHeader = new BlockHeaderRecord();
         blockHeader.setVersion(1);
         blockHeader.setTimeStamp(10L);
         blockHeader.setNonce(1);
@@ -114,7 +114,7 @@ public class ObjectUtilsTest {
 
     @Test
     public void getObjectTotalSize_BasicType_BaseObject() {
-        BlockHeader blockHeader = new BlockHeader();
+        BlockHeaderRecord blockHeader = new BlockHeaderRecord();
         blockHeader.setVersion(1);
         blockHeader.setTimeStamp(10L);
         blockHeader.setNonce(1);
@@ -125,7 +125,7 @@ public class ObjectUtilsTest {
 
     @Test
     public void getObjectTotalSize_BasicType_ComplexObject() {
-        BlockHeader blockHeader = new BlockHeader();
+        BlockHeaderRecord blockHeader = new BlockHeaderRecord();
         blockHeader.setVersion(1);
         blockHeader.setTimeStamp(10L);
         blockHeader.setNonce(1);
@@ -147,7 +147,7 @@ public class ObjectUtilsTest {
 
     @Test
     public void getObjectSize_BasicType_BaseObject() {
-        BlockHeader blockHeader = new BlockHeader();
+        BlockHeaderRecord blockHeader = new BlockHeaderRecord();
         blockHeader.setVersion(1);
         blockHeader.setTimeStamp(10L);
         blockHeader.setNonce(1);

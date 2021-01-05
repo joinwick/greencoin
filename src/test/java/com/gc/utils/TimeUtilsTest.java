@@ -18,17 +18,24 @@ public class TimeUtilsTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(TimeUtilsTest.class);
 
     @Test
-    public void convertTimeStampToDateTime() {
+    public void convertTimeStampToDateTime_ValidEntry() {
         long timeStamp = 1608472377000L;
-        String expectDateTime = "2020-12-20 13:52:57";
-        assertEquals(expectDateTime, TimeUtils.convertTimeStampToUnixDateTime(timeStamp));
+        String expectedRes = "2020-12-20 13:52:57";
+        assertEquals(expectedRes, TimeUtils.convertTimeStampToUnixDateTime(timeStamp));
+    }
+
+    @Test
+    public void convertUnixDateTimeToTimeStamp_ValidEntry() {
+        String unixDateTime = "2020-12-20 13:52:57";
+        long expectedRes = 1608472377000L;
+        assertEquals(expectedRes, TimeUtils.convertUnixDateTimeToTimeStamp(unixDateTime));
     }
 
     @Test
     public void convertTimeStampToDateTime_InitialDateTime() {
         long timeStamp = 0L;
-        String expectDateTime = "1970-01-01 00:00:00";
-        assertEquals(expectDateTime, TimeUtils.convertTimeStampToUnixDateTime(timeStamp));
+        String expectedRes = "1970-01-01 00:00:00";
+        assertEquals(expectedRes, TimeUtils.convertTimeStampToUnixDateTime(timeStamp));
     }
 
     @Test
@@ -40,16 +47,16 @@ public class TimeUtilsTest {
     }
 
     @Test
-    public void convertTimeStampToLocalDateTime() {
+    public void convertTimeStampToLocalDateTime_ValidEntry() {
         long timeStamp = 1608472377000L;
-        String expectDateTime = "2020-12-20 21:52:57";
-        assertEquals(expectDateTime, TimeUtils.convertTimeStampToLocalDateTime(timeStamp));
+        String expectedRes = "2020-12-20 21:52:57";
+        assertEquals(expectedRes, TimeUtils.convertTimeStampToLocalDateTime(timeStamp));
     }
 
     @Test
-    public void convertTimeStampToLocalDateTime_InitialDateTime() {
+    public void convertTimeStampToLocalDateTime_InitialDateTime_ValidEntry() {
         long timeStamp = 0L;
-        String expectDateTime = "1970-01-01 08:00:00";
-        assertEquals(expectDateTime, TimeUtils.convertTimeStampToLocalDateTime(timeStamp));
+        String expectedRes = "1970-01-01 08:00:00";
+        assertEquals(expectedRes, TimeUtils.convertTimeStampToLocalDateTime(timeStamp));
     }
 }

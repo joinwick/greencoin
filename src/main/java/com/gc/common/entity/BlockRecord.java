@@ -14,7 +14,7 @@ public class BlockRecord {
     // block size(4 bytes)
     private int blockSize;
     // block header(84 bytes)
-    private BlockHeader blockHeader;
+    private BlockHeaderRecord blockHeader;
     // transaction count in block(4 bytes)
     private int transactionCount;
     // transaction list(variable bytes)
@@ -28,11 +28,11 @@ public class BlockRecord {
         this.blockSize = blockSize;
     }
 
-    public BlockHeader getBlockHeader() {
+    public BlockHeaderRecord getBlockHeader() {
         return blockHeader;
     }
 
-    public void setBlockHeader(BlockHeader blockHeader) {
+    public void setBlockHeader(BlockHeaderRecord blockHeader) {
         this.blockHeader = blockHeader;
     }
 

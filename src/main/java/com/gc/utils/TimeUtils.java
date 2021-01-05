@@ -40,6 +40,22 @@ public class TimeUtils {
     }
 
     /**
+     * convert unix date time to time stamp
+     *
+     * @param dateTime String
+     * @return long
+     */
+    public static long convertUnixDateTimeToTimeStamp(String dateTime) {
+        if (CommonUtils.isEmpty(dateTime)) {
+            LOGGER.error("empty data in method<TimeUtils: convertUnixDateTimeToTimeStamp>");
+            return 0;
+        }
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(ConstantUtils.DEFAULT_DATE_TIME_FORMAT);
+        LocalDateTime localDateTime = LocalDateTime.parse(dateTime, dateTimeFormatter);
+        return LocalDateTime.from(localDateTime).atZone(ZoneOffset.UTC).toInstant().toEpochMilli();
+    }
+
+    /**
      * convert unix time stamp(needs to be accurate to milliseconds) to local date time
      *
      * @param timeStamp long(milliseconds)

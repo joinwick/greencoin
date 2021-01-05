@@ -452,4 +452,43 @@ public class EnumEntity {
         }
     }
 
+    public enum RadixType implements EnumInterface {
+        // binary
+        BIN_RADIX("2", "Binary"),
+        // octal
+        OCT_RADIX("8", "Octal"),
+        // decimal
+        DEC_RADIX("10", "Decimal"),
+        // hex
+        HEX_RADIX("16", "Hexadecimal"),
+        ;
+
+        String value;
+        String label;
+
+        RadixType(String value, String label) {
+            this.value = value;
+            this.label = label;
+        }
+
+        public static RadixType getEnumByValue(String value) {
+            for (RadixType radixType : RadixType.values()) {
+                if (radixType.value.equals(value)) {
+                    return radixType;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public String getValue() {
+            return this.value;
+        }
+
+        @Override
+        public String getLabel() {
+            return this.label;
+        }
+    }
+
 }

@@ -8,7 +8,7 @@ package com.gc.common.entity;
  * @createDate 2020/12/10 8:55
  * @since 1.0.0
  */
-public class BlockHeader {
+public class BlockHeaderRecord {
     // block version, indicates the validation rules that this block follows[4 bytes]
     private int version;
     // hash value of previous block, SHA256(SHA256(block header))[32 bytes]

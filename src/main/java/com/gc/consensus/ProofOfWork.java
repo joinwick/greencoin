@@ -1,13 +1,15 @@
 package com.gc.consensus;
 
-import com.gc.utils.BigIntegerUtils;
-import com.gc.utils.CommonUtils;
-import com.gc.utils.ConstantUtils;
-import com.gc.utils.ConvertUtils;
+import com.gc.common.entity.BlockRecord;
+import com.gc.common.entity.EnumEntity;
+import com.gc.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
+import java.util.List;
 
 /**
  * @author join wick
@@ -20,24 +22,106 @@ public class ProofOfWork {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProofOfWork.class);
 
     /**
-     * convert bits to binary target
+     * convert bits to special format target
+     *
      * @param bitString String
-     * @return  String
+     * @param radixType EnumEntity.RadixType
+     * @return String
      */
-    public String convertBitsToBinaryTarget(String bitString) {
+    public String convertBitsToSpecialTarget(String bitString, EnumEntity.RadixType radixType) {
+        String[] targetFactor = getTargetFactor(bitString);
+        if (CommonUtils.isEmpty(targetFactor) || CommonUtils.isEmpty(radixType)) {
+            LOGGER.error("invalid data in method<ProofOfWork: convertBitsToSpecialTarget>");
+            return "";
+        }
+        // get exponent hex string
+        String exponentString = targetFactor[0];
+        // get coefficient hex string
+        String coefficientString = targetFactor[1];
+        // get decimal target string
+        String decimalTargetString = getDecimalTarget(exponentString, coefficientString);
+        // convert decimal to special format
+        return ConvertUtils.convertSourceFormatToSpecialFormat(decimalTargetString, 10, Integer.parseInt(radixType.getValue()));
+    }
+
+    /**
+     * convert hex string to bits
+     *
+     * @param hexTargetString String
+     * @return String
+     */
+    public String convertHexTargetToBits(String hexTargetString) {
+        if (CommonUtils.isEmpty(hexTargetString)) {
+            LOGGER.error("empty data in method<ProofOfWork: convertHexTargetToBits>");
+            return "";
+        }
+        // convert to lower case
+        hexTargetString = hexTargetString.toLowerCase();
+        int nonZeroBeginIndex = 0;
+        int nonZeroEndIndex = 0;
+        for (int i = 0; i < hexTargetString.length() - 1; i++) {
+            char c = hexTargetString.charAt(i);
+            if (c != ConstantUtils.DEFAULT_ZERO_CHAR && nonZeroBeginIndex == 0) {
+                nonZeroBeginIndex = i;
+            }
+            // current char is still zero char
+            if (c == ConstantUtils.DEFAULT_ZERO_CHAR && nonZeroBeginIndex == 0) {
+                continue;
+            }
+            // the index of last non-zero char
+            if (c != ConstantUtils.DEFAULT_ZERO_CHAR) {
+                nonZeroEndIndex = i;
+            }
+        }
+        String coefficientString = hexTargetString.substring(nonZeroBeginIndex, nonZeroEndIndex + 1);
+        coefficientString = StringUtils.paddingIterator(coefficientString, ConstantUtils.DEFAULT_ZERO_STRING, ConstantUtils.DEFAULT_COEFFICIENT_LENGTH - coefficientString.length(), true);
+        BigDecimal targetDecimal = new BigDecimal(new BigInteger(hexTargetString, 16));
+        BigDecimal coefficientDecimal = new BigDecimal(new BigInteger(coefficientString, 16));
+        double exponent = targetDecimal.divide(coefficientDecimal, RoundingMode.HALF_EVEN).doubleValue();
+        double exponentData = Math.log(exponent) / Math.log(ConstantUtils.DEFAULT_POWER_BASE.intValue()) / ConstantUtils.DEFAULT_TARGET_FACTOR_ONE.doubleValue() +
+                ConstantUtils.DEFAULT_TARGET_FACTOR_TWO.doubleValue();
+        return ConstantUtils.DEFAULT_BITS_PREFIX + Integer.toHexString((int) exponentData) + coefficientString;
+    }
+
+    /**
+     * calculate average generation time of previous blocks(2020)
+     *
+     * @param firstBlock BlockRecord
+     * @param lastBlock  BlockRecord
+     * @return long(seconds)
+     */
+    public long calcBlockAverageGenerationTime(BlockRecord firstBlock, BlockRecord lastBlock) {
+        if (CommonUtils.isEmpty(firstBlock) || CommonUtils.isEmpty(lastBlock)) {
+            LOGGER.error("invalid data in method<ProofOfWork: getBlockAverageGenerationTime>");
+            return 0;
+        }
+        long firstBlockGenerationTimeStamp = firstBlock.getBlockHeader().getTimeStamp();
+        long lastBlockGenerationTimeStamp = lastBlock.getBlockHeader().getTimeStamp();
+        // calculate block average generation time
+        return (lastBlockGenerationTimeStamp - firstBlockGenerationTimeStamp) / (ConstantUtils.DEFAULT_BLOCK_COUNT * 1000L);
+    }
+
+    /**
+     * convert bits to binary target
+     *
+     * @param bitString String
+     * @return String[]
+     */
+    private String[] getTargetFactor(String bitString) {
         if (CommonUtils.isEmpty(bitString)) {
-            LOGGER.error("empty data in method<ProofOfWork: convertBitsToBinaryTarget>");
-            return "";
+            LOGGER.error("empty data in method<ProofOfWork: getTargetFactor>");
+            return new String[0];
         }
-        if (bitString.length() < ConstantUtils.DEFAULT_VALID_TARGET_LENGTH) {
-            LOGGER.error("invalid data in method<ProofOfWork: convertBitsToBinaryTarget>");
-            return "";
+        bitString = bitString.toLowerCase();
+        if (bitString.length() < ConstantUtils.DEFAULT_VALID_TARGET_LENGTH ||
+                !bitString.startsWith(ConstantUtils.DEFAULT_BITS_PREFIX)) {
+            LOGGER.error("invalid data in method<ProofOfWork: getTargetFactor>");
+            return new String[0];
         }
-        String exponentHexString = bitString.substring(2, 4);
-        String coefficientHexString = bitString.substring(4, 10);
-        String decimalTargetString = getDecimalTarget(exponentHexString, coefficientHexString);
-        // convert decimal to binary
-        return ConvertUtils.convertSourceFormatToSpecialFormat(decimalTargetString, 10, 2);
+        String[] targetFactor = new String[2];
+        targetFactor[0] = bitString.substring(2, 4);
+        targetFactor[1] = bitString.substring(4, 10);
+        return targetFactor;
     }
 
     /**
@@ -58,8 +142,8 @@ public class ProofOfWork {
         // get target with decimal format
         BigInteger decimalTarget = BigIntegerUtils.multiply(coefficient,
                 BigIntegerUtils.pow(ConstantUtils.DEFAULT_POWER_BASE,
-                        BigIntegerUtils.multiply(BigInteger.valueOf(8),
-                                BigIntegerUtils.subtract(exponent, BigInteger.valueOf(3)))));
+                        BigIntegerUtils.multiply(ConstantUtils.DEFAULT_TARGET_FACTOR_ONE,
+                                BigIntegerUtils.subtract(exponent, ConstantUtils.DEFAULT_TARGET_FACTOR_TWO))));
         return decimalTarget.toString();
     }
 

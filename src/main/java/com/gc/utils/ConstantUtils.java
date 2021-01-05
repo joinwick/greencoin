@@ -121,6 +121,14 @@ public final class ConstantUtils {
      */
     public static final String DEFAULT_ZERO_STRING = "0";
     /**
+     * default zero char
+     */
+    public static final char DEFAULT_ZERO_CHAR = '0';
+    /**
+     * default bits prefix
+     */
+    public static final String DEFAULT_BITS_PREFIX = "0x";
+    /**
      * default hex string format
      */
     public static final String DEFAULT_HEX_STRING_FORMAT = "%08x";
@@ -133,9 +141,21 @@ public final class ConstantUtils {
      */
     public static final BigInteger DEFAULT_POWER_BASE = BigInteger.valueOf(2);
     /**
+     * default target factor 0x08
+     */
+    public static final BigInteger DEFAULT_TARGET_FACTOR_ONE = BigInteger.valueOf(8);
+    /**
+     * default target factor 0x03
+     */
+    public static final BigInteger DEFAULT_TARGET_FACTOR_TWO = BigInteger.valueOf(3);
+    /**
      * default valid target length
      */
     public static final int DEFAULT_VALID_TARGET_LENGTH = 10;
+    /**
+     * default coefficient length
+     */
+    public static final int DEFAULT_COEFFICIENT_LENGTH = 6;
     /**
      * default minimum format
      */
@@ -144,4 +164,16 @@ public final class ConstantUtils {
      * default maximum format
      */
     public static final int DEFAULT_MAX_FORMAT = 30;
+    /**
+     * default difficulty hex target
+     */
+    public static final String DEFAULT_DIFFICULTY_HEX_TARGET = "00000000ffff0000000000000000000000000000000000000000000000000000";
+    /**
+     * default difficulty adjust block count
+     */
+    public static final int DEFAULT_BLOCK_COUNT = 2020;
+    /**
+     * default difficulty adjust period,seconds
+     */
+    public static final int DEFAULT_DIFFICULTY_ADJUST_PERIOD = 10 * 60 * DEFAULT_BLOCK_COUNT;
 }

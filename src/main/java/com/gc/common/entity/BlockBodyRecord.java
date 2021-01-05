@@ -8,5 +8,5 @@ package com.gc.common.entity;
  * @createDate 2020/12/10 8:56
  * @since 1.0.0
  */
-public class BlockBody {
+public class BlockBodyRecord {
 }
