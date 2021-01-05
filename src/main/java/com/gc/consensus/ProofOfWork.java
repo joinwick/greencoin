@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
-import java.util.List;
 
 /**
  * @author join wick
@@ -84,21 +83,57 @@ public class ProofOfWork {
     }
 
     /**
+     * calculate next mining period bits,next bits = current bits * actual time / expected time
+     *
+     * @param currentMiningBitsString String
+     * @param averageMiningTime       int
+     * @return String
+     */
+    public String calcNextMiningBits(String currentMiningBitsString, int averageMiningTime) {
+        if (CommonUtils.isEmpty(currentMiningBitsString) || averageMiningTime < 0){
+            LOGGER.error("invalid data in method<ProofOfWork: calcNextMiningBits>");
+            return ConstantUtils.DEFAULT_DIFFICULTY_BITS_TARGET;
+        }
+        // get current bits with decimal
+        String currentDecimalTarget = convertBitsToSpecialTarget(currentMiningBitsString, EnumEntity.RadixType.DEC_RADIX);
+        // calculate next bits with decimal
+        BigInteger nextBits = BigIntegerUtils.divide(
+                BigIntegerUtils.multiply(new BigInteger(currentDecimalTarget), BigInteger.valueOf(averageMiningTime)),
+                BigInteger.valueOf(ConstantUtils.DEFAULT_BLOCK_EXPECTED_GENERATION_TIME));
+        // convert decimal to hex
+        String hexBits = ConvertUtils.convertSourceFormatToSpecialFormat(nextBits.toString(), 10, 16);
+        hexBits = StringUtils.paddingIterator(hexBits, ConstantUtils.DEFAULT_ZERO_STRING, ConstantUtils.DEFAULT_HASH_HEX_LENGTH - hexBits.length(), true);
+        // get bits target
+        return convertHexTargetToBits(hexBits);
+    }
+
+    /**
      * calculate average generation time of previous blocks(2020)
      *
      * @param firstBlock BlockRecord
      * @param lastBlock  BlockRecord
      * @return long(seconds)
      */
-    public long calcBlockAverageGenerationTime(BlockRecord firstBlock, BlockRecord lastBlock) {
+    public int calcBlockAverageGenerationTime(BlockRecord firstBlock, BlockRecord lastBlock) {
         if (CommonUtils.isEmpty(firstBlock) || CommonUtils.isEmpty(lastBlock)) {
             LOGGER.error("invalid data in method<ProofOfWork: getBlockAverageGenerationTime>");
             return 0;
         }
         long firstBlockGenerationTimeStamp = firstBlock.getBlockHeader().getTimeStamp();
         long lastBlockGenerationTimeStamp = lastBlock.getBlockHeader().getTimeStamp();
+        long timeDiffSeconds = (lastBlockGenerationTimeStamp - firstBlockGenerationTimeStamp) / 1000L;
+        long difficultyAdjustLowerLimit = ConstantUtils.DEFAULT_DIFFICULTY_ADJUST_PERIOD / ConstantUtils.DEFAULT_DIFFICULTY_ADJUST_FACTOR;
+        long difficultyAdjustUpperLimit = ConstantUtils.DEFAULT_DIFFICULTY_ADJUST_PERIOD * ConstantUtils.DEFAULT_DIFFICULTY_ADJUST_FACTOR;
+        // prevent too high difficulty
+        if (timeDiffSeconds < difficultyAdjustLowerLimit) {
+            timeDiffSeconds = difficultyAdjustLowerLimit;
+        }
+        // prevent too low difficulty
+        else if (timeDiffSeconds > difficultyAdjustUpperLimit) {
+            timeDiffSeconds = difficultyAdjustUpperLimit;
+        }
         // calculate block average generation time
-        return (lastBlockGenerationTimeStamp - firstBlockGenerationTimeStamp) / (ConstantUtils.DEFAULT_BLOCK_COUNT * 1000L);
+        return (int) (timeDiffSeconds / ConstantUtils.DEFAULT_BLOCK_COUNT);
     }
 
     /**

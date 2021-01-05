@@ -84,6 +84,14 @@ public class ProofOfWorkTest {
     }
 
     @Test
+    public void calcNextMiningBits_NormalDifficultyTarget(){
+        String bitString = proofOfWork.calcNextMiningBits(ConstantUtils.DEFAULT_DIFFICULTY_BITS_TARGET, 600);
+        LOGGER.debug("bitString = <{}>", bitString);
+        String expectedRes = "0x1d00ffff";
+        assertEquals(expectedRes, bitString);
+    }
+
+    @Test
     public void convertBinaryTargetToBits_ValidEntry(){
         String bitString = proofOfWork.convertHexTargetToBits(hexHashString);
         LOGGER.debug("bitString = <{}>", bitString);
@@ -103,7 +111,7 @@ public class ProofOfWorkTest {
     @Test
     public void calcBlockAverageGenerationTime_ValidEntry() {
         long firstBlockTimeStamp = 1608472377000L;
-        long lastBlockTimeStamp  = 1609684377000L;
+        long lastBlockTimeStamp  = 1608492537000L;
         BlockRecord firstBlock = new BlockRecord();
         BlockHeaderRecord firstBlockHeader = new BlockHeaderRecord();
         firstBlockHeader.setTimeStamp(firstBlockTimeStamp);

@@ -169,11 +169,21 @@ public final class ConstantUtils {
      */
     public static final String DEFAULT_DIFFICULTY_HEX_TARGET = "00000000ffff0000000000000000000000000000000000000000000000000000";
     /**
+     * default difficulty bits target
+     */
+    public static final String DEFAULT_DIFFICULTY_BITS_TARGET = "0x1d00ffff";
+    /**
      * default difficulty adjust block count
      */
-    public static final int DEFAULT_BLOCK_COUNT = 2020;
+    public static final int DEFAULT_BLOCK_COUNT = 2016;
     /**
      * default difficulty adjust period,seconds
      */
-    public static final int DEFAULT_DIFFICULTY_ADJUST_PERIOD = 10 * 60 * DEFAULT_BLOCK_COUNT;
+    public static final long DEFAULT_DIFFICULTY_ADJUST_PERIOD = 3600L * 24 * 14;
+    /**
+     * default difficulty adjust factor
+     */
+    public static final int DEFAULT_DIFFICULTY_ADJUST_FACTOR = 4;
+
+    public static final int DEFAULT_BLOCK_EXPECTED_GENERATION_TIME = 10 * 60;
 }
