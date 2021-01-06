@@ -9,17 +9,30 @@ package com.gc.common.entity;
  * @since 1.0.0
  */
 public class BlockHeaderRecord {
-    // block version, indicates the validation rules that this block follows[4 bytes]
+    /**
+     * block version, indicates the validation rules that this block follows[4 bytes]
+     */
     private int version;
-    // hash value of previous block, SHA256(SHA256(block header))[32 bytes]
+    /**
+     * hash value of previous block, SHA256(SHA256(block header))[32 bytes]
+     */
     private String preBlockHashValue;
-    // hash value of merkle root, SHA256(SHA256(merkle root))[32 bytes]
+    /**
+     * hash value of merkle root, SHA256(SHA256(merkle root))[32 bytes]
+     */
     private String merkleRootHashValue;
-    // unix time stamp with , must larger than the previous 11 blocks middle time, these blocks(time >= 2h) will be refused by other node[8 bytes]
+    /**
+     * unix time stamp with milliseconds, must larger than the previous 11 blocks middle time,
+     * these blocks(time >= 2h) will be refused by other node[8 bytes]
+     */
     private long timeStamp;
-    // difficulty of mining, encoding by special algorithm[4 bytes]
+    /**
+     * difficulty of mining, encoding by special algorithm[4 bytes]
+      */
     private int targetZeroCount;
-    // used to generate a specific target value[4 bytes]
+    /**
+     * used to generate a specific target value[4 bytes]
+     */
     private int nonce;
 
     public int getVersion() {

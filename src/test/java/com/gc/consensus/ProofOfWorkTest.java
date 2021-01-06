@@ -84,10 +84,98 @@ public class ProofOfWorkTest {
     }
 
     @Test
-    public void calcNextMiningBits_NormalDifficultyTarget(){
+    public void calcNextMiningBits_DifficultyTarget_NoChange(){
         String bitString = proofOfWork.calcNextMiningBits(ConstantUtils.DEFAULT_DIFFICULTY_BITS_TARGET, 600);
         LOGGER.debug("bitString = <{}>", bitString);
         String expectedRes = "0x1d00ffff";
+        assertEquals(expectedRes, bitString);
+    }
+
+    @Test
+    public void calcNextMiningBits_DifficultyTarget_Hardest(){
+        String bitString = proofOfWork.calcNextMiningBits(ConstantUtils.DEFAULT_DIFFICULTY_BITS_TARGET, 150);
+        LOGGER.debug("bitString = <{}>", bitString);
+        String expectedRes = "0x1c03fffc";
+
+        String initialBinaryBits = proofOfWork.convertBitsToSpecialTarget(ConstantUtils.DEFAULT_DIFFICULTY_BITS_TARGET, EnumEntity.RadixType.BIN_RADIX);
+        initialBinaryBits = StringUtils.paddingIterator(initialBinaryBits,
+                ConstantUtils.DEFAULT_ZERO_STRING,
+                ConstantUtils.DEFAULT_HASH_BINARY_LENGTH - initialBinaryBits.length(),
+                true);
+        LOGGER.debug("initialBinaryBits = <{}>", initialBinaryBits);
+
+        String adjustedBinaryBits = proofOfWork.convertBitsToSpecialTarget(bitString, EnumEntity.RadixType.BIN_RADIX);
+        adjustedBinaryBits = StringUtils.paddingIterator(adjustedBinaryBits,
+                ConstantUtils.DEFAULT_ZERO_STRING,
+                ConstantUtils.DEFAULT_HASH_BINARY_LENGTH - adjustedBinaryBits.length(),
+                true);
+        LOGGER.debug("adjustedBinaryBits = <{}>", adjustedBinaryBits);
+
+        assertEquals(expectedRes, bitString);
+    }
+
+    @Test
+    public void calcNextMiningBits_DifficultyTarget_Harder(){
+        String bitString = proofOfWork.calcNextMiningBits(ConstantUtils.DEFAULT_DIFFICULTY_BITS_TARGET, 300);
+        LOGGER.debug("bitString = <{}>", bitString);
+        String expectedRes = "0x1c07fff8";
+
+        String initialBinaryBits = proofOfWork.convertBitsToSpecialTarget(ConstantUtils.DEFAULT_DIFFICULTY_BITS_TARGET, EnumEntity.RadixType.BIN_RADIX);
+        initialBinaryBits = StringUtils.paddingIterator(initialBinaryBits,
+                ConstantUtils.DEFAULT_ZERO_STRING,
+                ConstantUtils.DEFAULT_HASH_BINARY_LENGTH - initialBinaryBits.length(),
+                true);
+        LOGGER.debug("initialBinaryBits = <{}>", initialBinaryBits);
+
+        String adjustedBinaryBits = proofOfWork.convertBitsToSpecialTarget(bitString, EnumEntity.RadixType.BIN_RADIX);
+        adjustedBinaryBits = StringUtils.paddingIterator(adjustedBinaryBits,
+                ConstantUtils.DEFAULT_ZERO_STRING,
+                ConstantUtils.DEFAULT_HASH_BINARY_LENGTH - adjustedBinaryBits.length(),
+                true);
+        LOGGER.debug("adjustedBinaryBits = <{}>", adjustedBinaryBits);
+
+        assertEquals(expectedRes, bitString);
+    }
+
+    @Test
+    public void calcNextMiningBits_DifficultyTarget_ChangeLower(){
+        String bitString = proofOfWork.calcNextMiningBits(ConstantUtils.DEFAULT_DIFFICULTY_BITS_TARGET, 1200);
+        LOGGER.debug("bitString = <{}>", bitString);
+        String expectedRes = "0x1d01fffe";
+        String initialBinaryBits = proofOfWork.convertBitsToSpecialTarget(ConstantUtils.DEFAULT_DIFFICULTY_BITS_TARGET, EnumEntity.RadixType.BIN_RADIX);
+        initialBinaryBits = StringUtils.paddingIterator(initialBinaryBits,
+                ConstantUtils.DEFAULT_ZERO_STRING,
+                ConstantUtils.DEFAULT_HASH_BINARY_LENGTH - initialBinaryBits.length(),
+                true);
+        LOGGER.debug("initialBinaryBits = <{}>", initialBinaryBits);
+
+        String adjustedBinaryBits = proofOfWork.convertBitsToSpecialTarget(bitString, EnumEntity.RadixType.BIN_RADIX);
+        adjustedBinaryBits = StringUtils.paddingIterator(adjustedBinaryBits,
+                ConstantUtils.DEFAULT_ZERO_STRING,
+                ConstantUtils.DEFAULT_HASH_BINARY_LENGTH - adjustedBinaryBits.length(),
+                true);
+        LOGGER.debug("adjustedBinaryBits = <{}>", adjustedBinaryBits);
+        assertEquals(expectedRes, bitString);
+    }
+
+    @Test
+    public void calcNextMiningBits_DifficultyTarget_ChangeLowest(){
+        String bitString = proofOfWork.calcNextMiningBits(ConstantUtils.DEFAULT_DIFFICULTY_BITS_TARGET, 2400);
+        LOGGER.debug("bitString = <{}>", bitString);
+        String expectedRes = "0x1d03fffc";
+        String initialBinaryBits = proofOfWork.convertBitsToSpecialTarget(ConstantUtils.DEFAULT_DIFFICULTY_BITS_TARGET, EnumEntity.RadixType.BIN_RADIX);
+        initialBinaryBits = StringUtils.paddingIterator(initialBinaryBits,
+                ConstantUtils.DEFAULT_ZERO_STRING,
+                ConstantUtils.DEFAULT_HASH_BINARY_LENGTH - initialBinaryBits.length(),
+                true);
+        LOGGER.debug("initialBinaryBits = <{}>", initialBinaryBits);
+
+        String adjustedBinaryBits = proofOfWork.convertBitsToSpecialTarget(bitString, EnumEntity.RadixType.BIN_RADIX);
+        adjustedBinaryBits = StringUtils.paddingIterator(adjustedBinaryBits,
+                ConstantUtils.DEFAULT_ZERO_STRING,
+                ConstantUtils.DEFAULT_HASH_BINARY_LENGTH - adjustedBinaryBits.length(),
+                true);
+        LOGGER.debug("adjustedBinaryBits = <{}>", adjustedBinaryBits);
         assertEquals(expectedRes, bitString);
     }
 
@@ -111,7 +199,7 @@ public class ProofOfWorkTest {
     @Test
     public void calcBlockAverageGenerationTime_ValidEntry() {
         long firstBlockTimeStamp = 1608472377000L;
-        long lastBlockTimeStamp  = 1608492537000L;
+        long lastBlockTimeStamp  = 1609681977000L;
         BlockRecord firstBlock = new BlockRecord();
         BlockHeaderRecord firstBlockHeader = new BlockHeaderRecord();
         firstBlockHeader.setTimeStamp(firstBlockTimeStamp);

@@ -102,6 +102,7 @@ public class ProofOfWork {
                 BigInteger.valueOf(ConstantUtils.DEFAULT_BLOCK_EXPECTED_GENERATION_TIME));
         // convert decimal to hex
         String hexBits = ConvertUtils.convertSourceFormatToSpecialFormat(nextBits.toString(), 10, 16);
+        // padding hex
         hexBits = StringUtils.paddingIterator(hexBits, ConstantUtils.DEFAULT_ZERO_STRING, ConstantUtils.DEFAULT_HASH_HEX_LENGTH - hexBits.length(), true);
         // get bits target
         return convertHexTargetToBits(hexBits);
@@ -117,7 +118,7 @@ public class ProofOfWork {
     public int calcBlockAverageGenerationTime(BlockRecord firstBlock, BlockRecord lastBlock) {
         if (CommonUtils.isEmpty(firstBlock) || CommonUtils.isEmpty(lastBlock)) {
             LOGGER.error("invalid data in method<ProofOfWork: getBlockAverageGenerationTime>");
-            return 0;
+            return ConstantUtils.DEFAULT_BLOCK_EXPECTED_GENERATION_TIME;
         }
         long firstBlockGenerationTimeStamp = firstBlock.getBlockHeader().getTimeStamp();
         long lastBlockGenerationTimeStamp = lastBlock.getBlockHeader().getTimeStamp();

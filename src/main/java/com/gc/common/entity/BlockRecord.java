@@ -11,13 +11,21 @@ import java.util.List;
  * @since 1.0.0
  */
 public class BlockRecord {
-    // block size(4 bytes)
+    /**
+     * block size(4 bytes)
+     */
     private int blockSize;
-    // block header(84 bytes)
+    /**
+     * block header(84 bytes)
+     */
     private BlockHeaderRecord blockHeader;
-    // transaction count in block(4 bytes)
+    /**
+     * transaction count in block(4 bytes)
+     */
     private int transactionCount;
-    // transaction list(variable bytes)
+    /**
+     * transaction list(variable bytes)
+     */
     private List<TransactionRecord> transactionRecordList;
 
     public int getBlockSize() {
