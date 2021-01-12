@@ -21,6 +21,99 @@ public class ProofOfWork {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProofOfWork.class);
 
     /**
+     * calculate next mining period bits,next bits = current bits * actual time / expected time
+     *
+     * @param currentMiningBitsString String
+     * @param averageMiningTime       int
+     * @return String
+     */
+    public String calcNextMiningBits(String currentMiningBitsString, int averageMiningTime) {
+        if (CommonUtils.isEmpty(currentMiningBitsString) || averageMiningTime < 0){
+            LOGGER.error("invalid data in method<ProofOfWork: calcNextMiningBits>");
+            return ConstantUtils.DEFAULT_DIFFICULTY_BITS_TARGET;
+        }
+        // get current bits with decimal
+        String currentDecimalTarget = convertBitsToSpecialTarget(currentMiningBitsString, EnumEntity.RadixType.DEC_RADIX);
+        // calculate next bits with decimal
+        BigInteger nextBits = BigIntegerUtils.divide(
+                BigIntegerUtils.multiply(new BigInteger(currentDecimalTarget), BigInteger.valueOf(averageMiningTime)),
+                BigInteger.valueOf(ConstantUtils.DEFAULT_BLOCK_EXPECTED_GENERATION_TIME));
+        // convert decimal to hex
+        String hexBits = ConvertUtils.convertSourceFormatToSpecialFormat(nextBits.toString(), 10, 16);
+        // padding hex
+        hexBits = StringUtils.paddingIterator(hexBits,
+                ConstantUtils.DEFAULT_ZERO_STRING,
+                ConstantUtils.DEFAULT_HASH_HEX_LENGTH - hexBits.length(),
+                true);
+        // get bits target
+        return convertHexTargetToBits(hexBits);
+    }
+
+    /**
+     * calculate average generation time of previous blocks(2016)
+     *
+     * @param firstBlock BlockRecord
+     * @param lastBlock  BlockRecord
+     * @return long(seconds)
+     */
+    public int calcBlockAverageGenerationTime(BlockRecord firstBlock, BlockRecord lastBlock) {
+        if (CommonUtils.isEmpty(firstBlock) || CommonUtils.isEmpty(lastBlock)) {
+            LOGGER.error("invalid data in method<ProofOfWork: getBlockAverageGenerationTime>");
+            return ConstantUtils.DEFAULT_BLOCK_EXPECTED_GENERATION_TIME;
+        }
+        long firstBlockGenerationTimeStamp = firstBlock.getBlockHeader().getTimeStamp();
+        long lastBlockGenerationTimeStamp = lastBlock.getBlockHeader().getTimeStamp();
+        long timeDiffSeconds = (lastBlockGenerationTimeStamp - firstBlockGenerationTimeStamp) / 1000L;
+        long difficultyAdjustLowerLimit = ConstantUtils.DEFAULT_DIFFICULTY_ADJUST_PERIOD / ConstantUtils.DEFAULT_DIFFICULTY_ADJUST_FACTOR;
+        long difficultyAdjustUpperLimit = ConstantUtils.DEFAULT_DIFFICULTY_ADJUST_PERIOD * ConstantUtils.DEFAULT_DIFFICULTY_ADJUST_FACTOR;
+        // prevent too high difficulty
+        if (timeDiffSeconds < difficultyAdjustLowerLimit) {
+            timeDiffSeconds = difficultyAdjustLowerLimit;
+        }
+        // prevent too low difficulty
+        else if (timeDiffSeconds > difficultyAdjustUpperLimit) {
+            timeDiffSeconds = difficultyAdjustUpperLimit;
+        }
+        // calculate block average generation time
+        return (int) (timeDiffSeconds / ConstantUtils.DEFAULT_BLOCK_COUNT);
+    }
+
+    /**
+     * check block hash validation with binary format
+     *
+     * @param binaryTargetString String,zero part string(binary format)
+     * @param binaryHashString   String,hash string(binary format)
+     * @return boolean
+     */
+    public boolean checkBlockValid(String binaryTargetString, String binaryHashString) {
+        if (CommonUtils.isEmpty(binaryTargetString) || CommonUtils.isEmpty(binaryHashString)) {
+            LOGGER.error("empty data input in method<ProofOfWork: checkBlockValid>");
+            return false;
+        }
+        return binaryHashString.indexOf(binaryTargetString) == 0;
+    }
+
+    /**
+     * check block hash validation with binary format
+     *
+     * @param zeroCount        int,target(zero count)
+     * @param binaryHashString String,hash string(binary format)
+     * @return boolean
+     */
+    public boolean checkBlockValid(int zeroCount, String binaryHashString) {
+        if (CommonUtils.isEmpty(binaryHashString)) {
+            LOGGER.error("empty data in method<ProofOfWork: checkBlockValid>");
+            return false;
+        }
+        for (int i = 0; i < zeroCount; i++) {
+            if (binaryHashString.charAt(i) != ConstantUtils.DEFAULT_ZERO_CHAR) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * convert bits to special format target
      *
      * @param bitString String
@@ -83,61 +176,6 @@ public class ProofOfWork {
     }
 
     /**
-     * calculate next mining period bits,next bits = current bits * actual time / expected time
-     *
-     * @param currentMiningBitsString String
-     * @param averageMiningTime       int
-     * @return String
-     */
-    public String calcNextMiningBits(String currentMiningBitsString, int averageMiningTime) {
-        if (CommonUtils.isEmpty(currentMiningBitsString) || averageMiningTime < 0){
-            LOGGER.error("invalid data in method<ProofOfWork: calcNextMiningBits>");
-            return ConstantUtils.DEFAULT_DIFFICULTY_BITS_TARGET;
-        }
-        // get current bits with decimal
-        String currentDecimalTarget = convertBitsToSpecialTarget(currentMiningBitsString, EnumEntity.RadixType.DEC_RADIX);
-        // calculate next bits with decimal
-        BigInteger nextBits = BigIntegerUtils.divide(
-                BigIntegerUtils.multiply(new BigInteger(currentDecimalTarget), BigInteger.valueOf(averageMiningTime)),
-                BigInteger.valueOf(ConstantUtils.DEFAULT_BLOCK_EXPECTED_GENERATION_TIME));
-        // convert decimal to hex
-        String hexBits = ConvertUtils.convertSourceFormatToSpecialFormat(nextBits.toString(), 10, 16);
-        // padding hex
-        hexBits = StringUtils.paddingIterator(hexBits, ConstantUtils.DEFAULT_ZERO_STRING, ConstantUtils.DEFAULT_HASH_HEX_LENGTH - hexBits.length(), true);
-        // get bits target
-        return convertHexTargetToBits(hexBits);
-    }
-
-    /**
-     * calculate average generation time of previous blocks(2020)
-     *
-     * @param firstBlock BlockRecord
-     * @param lastBlock  BlockRecord
-     * @return long(seconds)
-     */
-    public int calcBlockAverageGenerationTime(BlockRecord firstBlock, BlockRecord lastBlock) {
-        if (CommonUtils.isEmpty(firstBlock) || CommonUtils.isEmpty(lastBlock)) {
-            LOGGER.error("invalid data in method<ProofOfWork: getBlockAverageGenerationTime>");
-            return ConstantUtils.DEFAULT_BLOCK_EXPECTED_GENERATION_TIME;
-        }
-        long firstBlockGenerationTimeStamp = firstBlock.getBlockHeader().getTimeStamp();
-        long lastBlockGenerationTimeStamp = lastBlock.getBlockHeader().getTimeStamp();
-        long timeDiffSeconds = (lastBlockGenerationTimeStamp - firstBlockGenerationTimeStamp) / 1000L;
-        long difficultyAdjustLowerLimit = ConstantUtils.DEFAULT_DIFFICULTY_ADJUST_PERIOD / ConstantUtils.DEFAULT_DIFFICULTY_ADJUST_FACTOR;
-        long difficultyAdjustUpperLimit = ConstantUtils.DEFAULT_DIFFICULTY_ADJUST_PERIOD * ConstantUtils.DEFAULT_DIFFICULTY_ADJUST_FACTOR;
-        // prevent too high difficulty
-        if (timeDiffSeconds < difficultyAdjustLowerLimit) {
-            timeDiffSeconds = difficultyAdjustLowerLimit;
-        }
-        // prevent too low difficulty
-        else if (timeDiffSeconds > difficultyAdjustUpperLimit) {
-            timeDiffSeconds = difficultyAdjustUpperLimit;
-        }
-        // calculate block average generation time
-        return (int) (timeDiffSeconds / ConstantUtils.DEFAULT_BLOCK_COUNT);
-    }
-
-    /**
      * convert bits to binary target
      *
      * @param bitString String
@@ -182,41 +220,4 @@ public class ProofOfWork {
                                 BigIntegerUtils.subtract(exponent, ConstantUtils.DEFAULT_TARGET_FACTOR_TWO))));
         return decimalTarget.toString();
     }
-
-    /**
-     * check block hash validation
-     *
-     * @param binaryTargetString String,zero part string(binary format)
-     * @param binaryHashString   String,hash string(binary format)
-     * @return boolean
-     */
-    public boolean checkBlockValid(String binaryTargetString, String binaryHashString) {
-        if (CommonUtils.isEmpty(binaryTargetString) || CommonUtils.isEmpty(binaryHashString)) {
-            LOGGER.error("empty data input in method<ProofOfWork: checkBlockValid>");
-            return false;
-        }
-        return binaryHashString.indexOf(binaryTargetString) == 0;
-    }
-
-    /**
-     * check block hash validation
-     *
-     * @param zeroCount        int,target(zero count)
-     * @param binaryHashString String,hash string(binary format)
-     * @return boolean
-     */
-    public boolean checkBlockValid(int zeroCount, String binaryHashString) {
-        if (CommonUtils.isEmpty(binaryHashString)) {
-            LOGGER.error("empty data in method<ProofOfWork: checkBlockValid>");
-            return false;
-        }
-        for (int i = 0; i < zeroCount; i++) {
-            if (binaryHashString.charAt(i) != '0') {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
 }
